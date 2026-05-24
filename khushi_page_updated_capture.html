@@ -1,0 +1,2116 @@
+<!doctype html>
+<html lang="hi-Latn">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khushi ke liye</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Syne:wght@400;700;800&family=Space+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --bg: #f0ebe3;
+        --ink: #1a1714;
+        --paper: #faf8f5;
+        --r: #d45c3a;
+        --gold: #c8973e;
+        --sage: #5e7a60;
+        --lilac: #8b7aad;
+        --warm: #e8e0d4;
+        --muted: #9a8f84;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: "Syne", sans-serif;
+        background: var(--bg);
+        color: var(--ink);
+        overflow-x: hidden;
+        cursor: none;
+      }
+
+      /* --- CURSOR --- */
+      #cur,
+      #cur2 {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9999;
+        border-radius: 50%;
+        transform: translate(-50%, -50%);
+        transition: opacity 0.2s;
+      }
+      #cur {
+        width: 10px;
+        height: 10px;
+        background: var(--r);
+        top: 0;
+        left: 0;
+      }
+      #cur2 {
+        width: 36px;
+        height: 36px;
+        border: 1.5px solid var(--r);
+        top: 0;
+        left: 0;
+        transition:
+          width 0.2s,
+          height 0.2s,
+          border-color 0.2s,
+          transform 0.1s;
+        opacity: 0.5;
+      }
+      body:has(a:hover) #cur2,
+      body:has(button:hover) #cur2 {
+        width: 52px;
+        height: 52px;
+        border-color: var(--gold);
+        opacity: 0.8;
+      }
+
+      /* --- NAV --- */
+      nav {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+        padding: 22px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        mix-blend-mode: multiply;
+      }
+      .nav-logo {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 22px;
+        font-weight: 600;
+        letter-spacing: -0.5px;
+      }
+      .nav-links {
+        display: flex;
+        gap: 32px;
+      }
+      .nav-links a {
+        font-size: 11px;
+        color: var(--muted);
+        text-decoration: none;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        transition: 0.2s;
+        font-weight: 700;
+      }
+      .nav-links a:hover {
+        color: var(--ink);
+      }
+
+      /* --- HERO --- */
+      .hero {
+        min-height: 100vh;
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+      }
+      .hero-left {
+        background: var(--ink);
+        color: var(--paper);
+        padding: 120px 56px 64px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero-noise {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.03;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+        background-size: 200px;
+      }
+      .hero-line {
+        position: absolute;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: linear-gradient(
+          to bottom,
+          transparent,
+          rgba(255, 255, 255, 0.15) 40%,
+          rgba(255, 255, 255, 0.15) 60%,
+          transparent
+        );
+      }
+      .hero-eyebrow {
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.3);
+        margin-bottom: 28px;
+        font-family: "Space Mono", monospace;
+      }
+      .hero-h1 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(64px, 7vw, 100px);
+        line-height: 0.88;
+        font-weight: 600;
+        letter-spacing: -3px;
+        margin-bottom: 40px;
+      }
+      .hero-h1 em {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--gold);
+      }
+      .hero-tagline {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+        line-height: 1.8;
+        max-width: 300px;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 16px;
+      }
+      .hero-badge {
+        position: absolute;
+        top: 50%;
+        right: -1px;
+        transform: translateY(-50%);
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--r);
+        display: grid;
+        place-items: center;
+        font-size: 10px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: #fff;
+        text-align: center;
+        line-height: 1.4;
+        font-weight: 700;
+        animation: badgeSpin 12s linear infinite;
+      }
+      @keyframes badgeSpin {
+        0% {
+          transform: translateY(-50%) rotate(0);
+        }
+        100% {
+          transform: translateY(-50%) rotate(360deg);
+        }
+      }
+
+      .hero-right {
+        background: var(--warm);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 80px 40px;
+        gap: 32px;
+        position: relative;
+      }
+      .hero-right-bg {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .hero-right-bg::before {
+        content: "";
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(200, 151, 62, 0.15) 0%,
+          transparent 70%
+        );
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+
+      /* --- VINYL --- */
+      .vinyl-container {
+        width: 220px;
+        height: 220px;
+        position: relative;
+        cursor: pointer;
+      }
+      .vinyl-outer {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background: repeating-conic-gradient(
+          #111 0deg,
+          #1c1c1c 2deg,
+          #111 4deg,
+          #1a1a1a 6deg
+        );
+        box-shadow:
+          0 0 0 1px rgba(255, 255, 255, 0.05),
+          0 32px 72px rgba(0, 0, 0, 0.3);
+        transition: 0.3s;
+        display: grid;
+        place-items: center;
+      }
+      .vinyl-container.playing .vinyl-outer {
+        animation: spin 2.5s linear infinite;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .vinyl-shine {
+        position: absolute;
+        inset: 0;
+        border-radius: 50%;
+        background: conic-gradient(
+          from 30deg,
+          transparent 0deg,
+          rgba(255, 255, 255, 0.06) 60deg,
+          transparent 120deg
+        );
+        pointer-events: none;
+      }
+      .vinyl-label {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: var(--r);
+        display: grid;
+        place-items: center;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 18px;
+        color: #fff;
+        border: 5px solid var(--warm);
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 2;
+      }
+      .vinyl-inner-ring {
+        position: absolute;
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .vinyl-inner-ring2 {
+        position: absolute;
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+      .play-controls {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        z-index: 1;
+      }
+      .play-btn {
+        width: 52px;
+        height: 52px;
+        border-radius: 50%;
+        background: var(--ink);
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+        display: grid;
+        place-items: center;
+        transition: 0.2s;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      }
+      .play-btn:hover {
+        transform: scale(1.06);
+        background: var(--r);
+      }
+      .track-info {
+        font-size: 12px;
+        color: var(--muted);
+        font-family: "Space Mono", monospace;
+      }
+      .track-info span {
+        display: block;
+        font-size: 10px;
+        opacity: 0.6;
+        margin-top: 3px;
+      }
+      audio {
+        display: none;
+      }
+
+      /* --- SECTION --- */
+      .s-label {
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: var(--muted);
+        margin-bottom: 14px;
+        font-family: "Space Mono", monospace;
+      }
+
+      /* --- MOOD --- */
+      .mood-section {
+        padding: 110px 56px;
+        display: grid;
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 80px;
+        align-items: start;
+      }
+      .mood-heading {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(44px, 5vw, 68px);
+        line-height: 0.9;
+        letter-spacing: -2px;
+        margin-bottom: 0;
+      }
+      .mood-heading em {
+        font-style: italic;
+        font-weight: 300;
+        color: var(--sage);
+      }
+      .mood-pills {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-bottom: 32px;
+      }
+      .pill {
+        padding: 10px 22px;
+        border-radius: 999px;
+        border: 1.5px solid var(--warm);
+        background: transparent;
+        font-family: "Syne", sans-serif;
+        font-size: 12px;
+        cursor: pointer;
+        color: var(--muted);
+        transition: 0.25s;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .pill.active,
+      .pill:hover {
+        background: var(--ink);
+        color: var(--paper);
+        border-color: var(--ink);
+      }
+      .mood-card {
+        background: var(--paper);
+        border-radius: 28px;
+        padding: 36px;
+        box-shadow: 0 2px 40px rgba(0, 0, 0, 0.06);
+        transition: 0.3s;
+      }
+      .mood-card-inner {
+        display: flex;
+        align-items: flex-start;
+        gap: 20px;
+      }
+      .mood-emoji {
+        font-size: 52px;
+        flex-shrink: 0;
+        width: 72px;
+        height: 72px;
+        border-radius: 20px;
+        background: var(--warm);
+        display: grid;
+        place-items: center;
+      }
+      .mood-title {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 32px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        letter-spacing: -0.5px;
+      }
+      .mood-text {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+
+      /* --- WIDGET GRID --- */
+      .widgets {
+        padding: 0 56px 110px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 22px;
+      }
+      .w-card {
+        background: var(--paper);
+        border-radius: 24px;
+        padding: 28px;
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.2s;
+      }
+      .w-card:hover {
+        transform: translateY(-3px);
+      }
+      .w-card.accent-r {
+        background: var(--r);
+        color: #fff;
+      }
+      .w-card.accent-g {
+        background: var(--sage);
+        color: #fff;
+      }
+      .w-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 18px;
+      }
+      .w-tag {
+        font-size: 10px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        opacity: 0.55;
+        font-family: "Space Mono", monospace;
+      }
+      .w-ico {
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        border: none;
+        cursor: pointer;
+        font-size: 13px;
+        display: grid;
+        place-items: center;
+        transition: 0.2s;
+      }
+      .w-card:not(.accent-r):not(.accent-g) .w-ico {
+        background: var(--ink);
+        color: #fff;
+      }
+      .w-card.accent-r .w-ico {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+      .w-card.accent-g .w-ico {
+        background: rgba(255, 255, 255, 0.2);
+        color: #fff;
+      }
+      .w-ico:hover {
+        transform: rotate(120deg);
+      }
+      .w-big {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(18px, 2.2vw, 24px);
+        line-height: 1.25;
+        letter-spacing: -0.3px;
+        margin-bottom: 10px;
+      }
+      .w-small {
+        font-size: 13px;
+        opacity: 0.6;
+        line-height: 1.7;
+      }
+
+      /* countdown */
+      .countdown-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        margin-top: 4px;
+      }
+      .cd-cell {
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 12px;
+        padding: 12px 8px;
+        text-align: center;
+      }
+      .cd-num {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 36px;
+        font-weight: 600;
+        line-height: 1;
+      }
+      .cd-lab {
+        font-size: 9px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        opacity: 0.6;
+        margin-top: 4px;
+      }
+
+      /* scratch card */
+      .scratch-wrap {
+        position: relative;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-top: 4px;
+      }
+      canvas#scratchCanvas {
+        display: block;
+        border-radius: 16px;
+        cursor: crosshair;
+      }
+      .scratch-reveal {
+        position: absolute;
+        inset: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 22px;
+        color: var(--ink);
+        background: var(--warm);
+        border-radius: 16px;
+        pointer-events: none;
+        line-height: 1.4;
+        text-align: center;
+        padding: 12px;
+      }
+
+      /* --- EK BAAT --- */
+      .ek-baat {
+        margin: 0 56px 110px;
+        background: var(--ink);
+        color: var(--paper);
+        border-radius: 32px;
+        padding: 72px 64px;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 64px;
+        align-items: center;
+        position: relative;
+        overflow: hidden;
+      }
+      .ek-deco {
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 280px;
+        height: 280px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.05);
+      }
+      .ek-deco2 {
+        position: absolute;
+        right: -20px;
+        top: -20px;
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.04);
+      }
+      .ek-heading {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(44px, 5vw, 68px);
+        line-height: 0.9;
+        letter-spacing: -2px;
+      }
+      .ek-heading em {
+        font-style: italic;
+        color: var(--gold);
+      }
+      .ek-sub {
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 16px;
+        line-height: 1.8;
+      }
+      .ek-right {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+      .ek-q-card {
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 20px;
+        padding: 24px;
+        border: 1px solid rgba(255, 255, 255, 0.07);
+      }
+      .ek-q {
+        font-size: 16px;
+        line-height: 1.6;
+        margin-bottom: 16px;
+        color: rgba(255, 255, 255, 0.85);
+      }
+      .ek-btns {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        position: relative;
+        min-height: 44px;
+      }
+      .ek-btn {
+        padding: 10px 24px;
+        border-radius: 999px;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        transition: 0.25s;
+        letter-spacing: 0.3px;
+      }
+      .yes-btn {
+        background: var(--gold);
+        color: var(--ink);
+      }
+      .yes-btn:hover {
+        transform: scale(1.04);
+      }
+      .no-btn {
+        background: rgba(255, 255, 255, 0.08);
+        color: rgba(255, 255, 255, 0.5);
+        position: relative;
+      }
+      .ek-res {
+        font-size: 13px;
+        color: var(--gold);
+        display: none;
+        margin-top: 8px;
+        font-family: "Cormorant Garamond", serif;
+        font-style: italic;
+        font-size: 17px;
+      }
+
+      /* --- REPLY --- */
+      .reply-section {
+        padding: 0 56px 110px;
+      }
+      .reply-inner {
+        background: var(--paper);
+        border-radius: 32px;
+        padding: 56px;
+        display: grid;
+        grid-template-columns: 1fr 1.2fr;
+        gap: 56px;
+        align-items: start;
+      }
+      .reply-heading {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(36px, 4vw, 52px);
+        line-height: 0.95;
+        letter-spacing: -1.5px;
+        margin-bottom: 12px;
+      }
+      .reply-heading em {
+        font-style: italic;
+        color: var(--r);
+      }
+      .reply-sub {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.8;
+      }
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 16px;
+      }
+      .chip {
+        padding: 8px 18px;
+        border-radius: 999px;
+        border: 1.5px solid var(--warm);
+        background: transparent;
+        font-family: "Syne", sans-serif;
+        font-size: 11px;
+        cursor: pointer;
+        color: var(--muted);
+        transition: 0.2s;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .chip.active {
+        background: var(--ink);
+        color: var(--paper);
+        border-color: var(--ink);
+      }
+      textarea {
+        width: 100%;
+        min-height: 110px;
+        resize: vertical;
+        border-radius: 16px;
+        padding: 18px;
+        border: 1.5px solid var(--warm);
+        background: var(--bg);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 16px;
+        color: var(--ink);
+        outline: none;
+        line-height: 1.7;
+      }
+      textarea:focus {
+        border-color: var(--r);
+      }
+      textarea::placeholder {
+        color: rgba(26, 23, 20, 0.3);
+      }
+      .send-row {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 12px;
+      }
+      .send-btn {
+        padding: 14px 32px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: var(--paper);
+        border: none;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s;
+        letter-spacing: 0.5px;
+      }
+      .send-btn:hover {
+        background: var(--r);
+      }
+      .reply-msg {
+        margin-top: 10px;
+        font-size: 13px;
+        display: none;
+        font-family: "Space Mono", monospace;
+      }
+      .reply-msg.ok {
+        color: var(--sage);
+      }
+      .reply-msg.err {
+        color: var(--r);
+      }
+
+      /* --- EXTRA RESPONSE INPUTS --- */
+      .mini-input {
+        width: 100%;
+        border-radius: 14px;
+        padding: 14px 16px;
+        border: 1.5px solid var(--warm);
+        background: var(--bg);
+        color: var(--ink);
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        outline: none;
+        margin: 8px 0 10px;
+      }
+      .mini-input:focus {
+        border-color: var(--r);
+      }
+      .mini-input.light {
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.18);
+      }
+      .mini-input.light::placeholder {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .mini-save-btn {
+        padding: 10px 20px;
+        border-radius: 999px;
+        background: var(--gold);
+        color: var(--ink);
+        border: none;
+        font-family: "Syne", sans-serif;
+        font-size: 12px;
+        font-weight: 800;
+        cursor: pointer;
+        transition: 0.2s;
+      }
+      .mini-save-btn:hover {
+        transform: translateY(-1px);
+      }
+      .capture-hint {
+        font-size: 11px;
+        opacity: 0.6;
+        line-height: 1.6;
+        margin-top: 8px;
+      }
+      .ek-free-response {
+        width: 100%;
+        min-height: 78px;
+        resize: vertical;
+        margin-top: 14px;
+        border-radius: 16px;
+        padding: 14px 16px;
+        border: 1.5px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--paper);
+        font-family: "Cormorant Garamond", serif;
+        font-size: 16px;
+        outline: none;
+        line-height: 1.6;
+      }
+      .ek-free-response:focus {
+        border-color: var(--gold);
+      }
+      .ek-free-response::placeholder {
+        color: rgba(255, 255, 255, 0.35);
+      }
+      .ek-progress {
+        margin-top: 14px;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(255, 255, 255, 0.35);
+        font-family: "Space Mono", monospace;
+      }
+      .ek-summary {
+        display: none;
+        margin-top: 16px;
+        padding-top: 14px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        font-size: 13px;
+        color: rgba(255, 255, 255, 0.55);
+        line-height: 1.7;
+      }
+
+      /* --- FOOTER --- */
+      footer {
+        padding: 60px 56px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-top: 1px solid var(--warm);
+      }
+      .footer-mark {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(36px, 5vw, 64px);
+        line-height: 0.9;
+        letter-spacing: -2px;
+        font-weight: 600;
+      }
+      .footer-note {
+        font-size: 12px;
+        color: var(--muted);
+        text-align: right;
+        line-height: 2;
+        font-family: "Space Mono", monospace;
+      }
+
+      /* --- EGG --- */
+      .egg-overlay {
+        position: fixed;
+        inset: 0;
+        background: rgba(26, 23, 20, 0.75);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 999;
+        backdrop-filter: blur(8px);
+      }
+      .egg-overlay.show {
+        display: flex;
+      }
+      .egg-box {
+        background: var(--paper);
+        border-radius: 32px;
+        padding: 48px 40px;
+        max-width: 400px;
+        text-align: center;
+      }
+      .egg-box h3 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: 38px;
+        margin: 12px 0 8px;
+        letter-spacing: -1px;
+      }
+      .egg-box p {
+        font-size: 14px;
+        color: var(--muted);
+        line-height: 1.9;
+        margin-bottom: 24px;
+      }
+      .egg-close {
+        padding: 12px 28px;
+        border-radius: 999px;
+        background: var(--ink);
+        color: #fff;
+        border: none;
+        font-family: "Syne", sans-serif;
+        font-size: 13px;
+        cursor: pointer;
+        font-weight: 700;
+      }
+
+      /* --- CONFETTI --- */
+      .confetti-piece {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9998;
+        width: 8px;
+        height: 8px;
+        border-radius: 1px;
+        animation: confettiFall linear forwards;
+      }
+      @keyframes confettiFall {
+        0% {
+          transform: translateY(-20px) rotate(0deg);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(110vh) rotate(720deg);
+          opacity: 0;
+        }
+      }
+
+      /* --- FLOATING STARS --- */
+      .star {
+        position: fixed;
+        pointer-events: none;
+        z-index: 9997;
+        font-size: 16px;
+        animation: starFloat 1.2s ease-out forwards;
+      }
+      @keyframes starFloat {
+        0% {
+          transform: translateY(0) scale(0.5);
+          opacity: 1;
+        }
+        100% {
+          transform: translateY(-80px) scale(1.2);
+          opacity: 0;
+        }
+      }
+
+      /* --- MARQUEE --- */
+      .marquee-wrap {
+        background: var(--r);
+        color: #fff;
+        padding: 14px 0;
+        overflow: hidden;
+        display: flex;
+      }
+      .marquee-inner {
+        display: flex;
+        gap: 0;
+        white-space: nowrap;
+        animation: marquee 18s linear infinite;
+      }
+      .marquee-inner span {
+        font-size: 12px;
+        letter-spacing: 3px;
+        text-transform: uppercase;
+        font-weight: 700;
+        padding: 0 32px;
+      }
+      .marquee-inner span::after {
+        content: "✦";
+        margin-left: 32px;
+        opacity: 0.5;
+      }
+      @keyframes marquee {
+        0% {
+          transform: translateX(0);
+        }
+        100% {
+          transform: translateX(-50%);
+        }
+      }
+
+      /* --- RESPONSIVE --- */
+      @media (max-width: 960px) {
+        nav {
+          padding: 18px 24px;
+        }
+        .hero {
+          grid-template-columns: 1fr;
+        }
+        .hero-left {
+          min-height: 65vh;
+          padding: 90px 28px 44px;
+        }
+        .hero-badge {
+          display: none;
+        }
+        .hero-right {
+          padding: 48px 28px;
+        }
+        .mood-section {
+          grid-template-columns: 1fr;
+          padding: 70px 24px;
+          gap: 36px;
+        }
+        .widgets {
+          grid-template-columns: 1fr 1fr;
+          padding: 0 24px 70px;
+        }
+        .ek-baat {
+          margin: 0 24px 70px;
+          padding: 44px 28px;
+          grid-template-columns: 1fr;
+          gap: 36px;
+        }
+        .reply-section {
+          padding: 0 24px 70px;
+        }
+        .reply-inner {
+          grid-template-columns: 1fr;
+          padding: 32px;
+          gap: 32px;
+        }
+        footer {
+          padding: 40px 24px;
+          flex-direction: column;
+          gap: 20px;
+        }
+        .footer-note {
+          text-align: left;
+        }
+      }
+      @media (max-width: 600px) {
+        .widgets {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="cur"></div>
+    <div id="cur2"></div>
+
+    <nav>
+      <div class="nav-logo">K·</div>
+      <div class="nav-links">
+        <a href="#mood">mood</a>
+        <a href="#ek">baat</a>
+        <a href="#reply">reply</a>
+      </div>
+    </nav>
+
+    <!-- MARQUEE -->
+    <div
+      class="marquee-wrap"
+      style="margin-top: 0; position: relative; z-index: 10"
+    >
+      <div class="marquee-inner">
+        <span></span>
+        <span>always leaned towards maithalani</span>
+        <span>mujhe aapse milne ka soubhagya mila</span>
+        <span>only for Khushi Jha</span>
+        <span>Khushi Jha — Jha ji</span>
+        <span>kya ham dost ban sakte hai</span>
+      </div>
+    </div>
+
+    <!-- HERO -->
+    <section class="hero">
+      <div class="hero-left">
+        <div class="hero-noise"></div>
+        <div class="hero-line"></div>
+        <div class="hero-eyebrow">// 001 — intro</div>
+        <h1 class="hero-h1">
+          Hey,<br />
+          <em>Khushi</em><br />
+          Jha
+        </h1>
+        <p class="hero-tagline">aspire to be your friend</p>
+        <div class="hero-badge" style="font-size: 9px; line-height: 1.5">
+          THIS<br />PAGE<br />IS<br />FOR<br />YOU
+        </div>
+      </div>
+
+      <div class="hero-right">
+        <div class="hero-right-bg"></div>
+        <audio id="song" preload="metadata"></audio>
+
+        <div class="vinyl-container" id="vinylWrap">
+          <div class="vinyl-outer">
+            <div class="vinyl-shine"></div>
+            <div class="vinyl-inner-ring"></div>
+            <div class="vinyl-inner-ring2"></div>
+            <div class="vinyl-label">♪</div>
+          </div>
+        </div>
+
+        <div class="play-controls">
+          <button class="play-btn" id="playBtn" aria-label="Play">▶</button>
+          <div class="track-info">
+            Local song
+            <span id="timeDisp">0:00</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MOOD -->
+    <section class="mood-section" id="mood">
+      <div>
+        <div class="s-label">01 — mood zone</div>
+        <h2 class="mood-heading">Aaj<br /><em>kaisi</em><br />ho?</h2>
+      </div>
+      <div>
+        <div class="mood-pills" id="moodPills">
+          <button class="pill active" data-k="chill">☁️ Chill</button>
+          <button class="pill" data-k="mast">✨ Mast</button>
+          <button class="pill" data-k="busy">📚 Busy</button>
+          <button class="pill" data-k="overthink">🌙 Overthinking</button>
+          <button class="pill" data-k="random">🎲 Random</button>
+        </div>
+        <div class="mood-card" id="moodCard">
+          <div class="mood-card-inner">
+            <div class="mood-emoji" id="mIcon">☁️</div>
+            <div>
+              <div class="mood-title" id="mTitle">Chill mode</div>
+              <div class="mood-text" id="mText">
+                Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda
+                sa light rehna hai.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WIDGETS -->
+    <div class="widgets">
+      <!-- Note -->
+
+      <!-- Song -->
+      <div class="w-card">
+        <div class="w-top">
+          <div class="w-tag">ek gaana</div>
+          <button class="w-ico" id="shuffleSong" title="Shuffle">↻</button>
+        </div>
+        <div class="w-big" id="songTitle">Iktara</div>
+        <div class="w-small" id="songDesc">
+          Soft mood ke liye. Headphones lagao aur thoda slow ho jao.
+        </div>
+      </div>
+
+      <!-- Song suggestion -->
+      <div class="w-card accent-g">
+        <div class="w-top">
+          <div class="w-tag">aapka gaana</div>
+          <button class="w-ico" id="saveSongSuggestion" title="Save">✓</button>
+        </div>
+        <div class="w-big">Aapka favourite song?</div>
+        <div class="w-small">Ek gaana suggest kar do, main bhi sununga.</div>
+        <input
+          class="mini-input light"
+          id="songSuggestion"
+          type="text"
+          placeholder="Song name ya artist..."
+          autocomplete="off"
+        />
+        <div class="capture-hint" id="songSuggestionMsg">
+          Suggestion bhi response ke saath capture hoga.
+        </div>
+      </div>
+    </div>
+
+    <!-- EK BAAT -->
+    <div class="ek-baat" id="ek">
+      <div class="ek-deco"></div>
+      <div class="ek-deco2"></div>
+      <div>
+        <div class="s-label" style="color: rgba(255, 255, 255, 0.3)">
+          02 — ek sawal
+        </div>
+        <h2 class="ek-heading">Ek<br /><em>respectful</em><br />sawal</h2>
+        <p class="ek-sub">
+          Bas honestly pooch raha hoon. Jo bhi jawab ho, woh mere liye important
+          hoga.
+        </p>
+      </div>
+
+      <div class="ek-right">
+        <div class="ek-q-card">
+          <div class="ek-q" id="ekQ">
+            Kya main aapka dost banne ke laayak hoon?
+          </div>
+          <div class="ek-btns" id="ekBtns"></div>
+          <textarea
+            class="ek-free-response"
+            id="ekFreeText"
+            placeholder="Agar kuch aur kehna ho toh yahan likh sakti ho..."
+          ></textarea>
+          <div
+            style="display: flex; gap: 10px; flex-wrap: wrap; margin-top: 10px"
+          >
+            <button class="mini-save-btn" id="saveEkText">Save response</button>
+          </div>
+          <div class="ek-res" id="ekResult"></div>
+          <div class="ek-progress" id="ekProgress">Question 1 of 3</div>
+          <div class="ek-summary" id="ekSummary"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REPLY -->
+    <section class="reply-section" id="reply">
+      <div class="reply-inner">
+        <div>
+          <div class="s-label">03 — reply zone</div>
+          <h2 class="reply-heading">Ek<br /><em>reply</em><br />dogi?</h2>
+          <p class="reply-sub">Kuch bhi. Ek line, ek gaana, ya bas "nice".</p>
+        </div>
+        <div>
+          <div class="chips" id="chips">
+            <button class="chip active" data-v="Chill">😌 Chill</button>
+            <button class="chip" data-v="Happy">😊 Happy</button>
+            <button class="chip" data-v="Busy">📚 Busy</button>
+            <button class="chip" data-v="Sleepy">🌙 Sleepy</button>
+            <button class="chip" data-v="Random">🎲 Random</button>
+          </div>
+          <textarea
+            id="replyText"
+            placeholder="Yahan kuch bhi likh sakti ho..."
+          ></textarea>
+          <div class="send-row">
+            <button class="send-btn" id="sendBtn">Bhejo ✦</button>
+          </div>
+          <div class="reply-msg" id="replyMsg"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="about-footer">
+      <div class="footer-glow"></div>
+
+      <div class="about-footer-inner">
+        <div class="about-left">
+          <span class="about-label">About me</span>
+          <h2>Aman Choudhary</h2>
+          <p>
+            I am Aman Choudhary, from Kusheshwar Asthan, Darbhanga. I belong to
+            a Hindu Brahman family and I am currently pursuing B.Tech from IIT
+            Bhubaneswar. I have just completed my 2nd year and I am 20 years
+            old.
+          </p>
+        </div>
+        
+        <div class="about-right">
+          <div class="about-chip">IIT Bhubaneswar</div>
+          <div class="about-chip">Emotionally Sensitive</div>
+          <div class="about-chip">Long Bike Rides</div>
+          <div class="about-chip">Singing</div>
+          <div class="about-chip">Loving</div>
+        </div>
+      </div>
+
+      <div class="about-footer-bottom">
+        <span>Built with honesty and care.</span>
+        <span>A · C</span>
+      </div>
+    </footer>
+
+    <style>
+      .about-footer {
+        margin-top: 40px;
+        padding: 70px 56px 36px;
+        background: #1a1714;
+        color: #faf8f5;
+        position: relative;
+        overflow: hidden;
+        border-top-left-radius: 36px;
+        border-top-right-radius: 36px;
+      }
+
+      .footer-glow {
+        position: absolute;
+        width: 360px;
+        height: 360px;
+        right: -120px;
+        top: -140px;
+        border-radius: 50%;
+        background: radial-gradient(
+          circle,
+          rgba(200, 151, 62, 0.24),
+          transparent 70%
+        );
+        pointer-events: none;
+      }
+
+      .about-footer-inner {
+        position: relative;
+        z-index: 1;
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr;
+        gap: 56px;
+        align-items: center;
+      }
+
+      .about-label {
+        display: inline-block;
+        font-family: "Space Mono", monospace;
+        font-size: 10px;
+        letter-spacing: 4px;
+        text-transform: uppercase;
+        color: #c8973e;
+        margin-bottom: 16px;
+      }
+
+      .about-left h2 {
+        font-family: "Cormorant Garamond", serif;
+        font-size: clamp(44px, 6vw, 74px);
+        line-height: 0.9;
+        letter-spacing: -2px;
+        margin-bottom: 22px;
+      }
+
+      .about-left p {
+        max-width: 650px;
+        font-size: 14px;
+        line-height: 1.9;
+        color: rgba(250, 248, 245, 0.66);
+      }
+
+      .about-right {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: flex-end;
+      }
+
+      .about-chip {
+        padding: 12px 20px;
+        border-radius: 999px;
+        background: rgba(255, 255, 255, 0.07);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        font-size: 12px;
+        font-weight: 700;
+        letter-spacing: 0.4px;
+        color: rgba(250, 248, 245, 0.8);
+        transition: 0.25s ease;
+      }
+
+      .about-chip:hover {
+        background: #c8973e;
+        color: #1a1714;
+        transform: translateY(-3px);
+      }
+
+      .about-footer-bottom {
+        position: relative;
+        z-index: 1;
+        margin-top: 56px;
+        padding-top: 24px;
+        border-top: 1px solid rgba(255, 255, 255, 0.08);
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        font-family: "Space Mono", monospace;
+        font-size: 11px;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        color: rgba(250, 248, 245, 0.35);
+      }
+
+      @media (max-width: 800px) {
+        .about-footer {
+          padding: 54px 24px 30px;
+        }
+
+        .about-footer-inner {
+          grid-template-columns: 1fr;
+          gap: 34px;
+        }
+
+        .about-right {
+          justify-content: flex-start;
+        }
+
+        .about-footer-bottom {
+          flex-direction: column;
+        }
+      }
+    </style>
+
+    <!-- SECRET EGG -->
+    <div class="egg-overlay" id="eggOverlay">
+      <div class="egg-box">
+        <div style="font-size: 48px">🎁</div>
+        <h3>Secret mil gaya</h3>
+        <p>
+          Agar tum yahan tak aa gayi ho, toh bas itna samjho ki yeh page
+          casually nahi banaya gaya tha. 🙂
+        </p>
+        <button
+          class="egg-close"
+          onclick="
+            document.getElementById('eggOverlay').classList.remove('show')
+          "
+        >
+          Close ✦
+        </button>
+      </div>
+    </div>
+
+    <script>
+      /* ---------- CURSOR ---------- */
+      const cur = document.getElementById("cur"),
+        cur2 = document.getElementById("cur2");
+      let mx = 0,
+        my = 0,
+        cx = 0,
+        cy = 0;
+      document.addEventListener("mousemove", (e) => {
+        mx = e.clientX;
+        my = e.clientY;
+        cur.style.left = mx + "px";
+        cur.style.top = my + "px";
+      });
+      (function animCur() {
+        cx += (mx - cx) * 0.12;
+        cy += (my - cy) * 0.12;
+        cur2.style.left = cx + "px";
+        cur2.style.top = cy + "px";
+        requestAnimationFrame(animCur);
+      })();
+
+      /* ---------- RESPONSE CAPTURE ---------- */
+      const FORM_ENDPOINT = "https://formspree.io/f/xnjrzker";
+      const responseState = {
+        page: "Khushi ke liye",
+        openedAt: new Date().toISOString(),
+        moodZone: localStorage.getItem("kMood") || "chill",
+        songSuggestion: "",
+        ekBaat: [],
+        ekFreeText: "",
+        replyMood: "Chill",
+        replyText: "",
+      };
+
+      function updateState(key, value) {
+        responseState[key] = value;
+        localStorage.setItem(
+          "khushiFullResponse",
+          JSON.stringify(responseState),
+        );
+      }
+
+      function prettyTime(value) {
+        if (!value) return "(not available)";
+        const d = new Date(value);
+        if (Number.isNaN(d.getTime())) return value;
+        return d.toLocaleString("en-IN", {
+          dateStyle: "medium",
+          timeStyle: "short",
+        });
+      }
+
+      function emptyText(value, fallback = "(not given)") {
+        return String(value || "").trim() || fallback;
+      }
+
+      function prettyEkAnswers() {
+        if (!responseState.ekBaat.length) return "(not answered yet)";
+        return responseState.ekBaat
+          .map(
+            (item, index) =>
+              `Q${index + 1}. ${item.question}\nAnswer: ${item.answer}\nMessage shown: ${item.messageShown}\nTime: ${prettyTime(item.time)}`,
+          )
+          .join("\n\n");
+      }
+
+      async function captureResponse(eventName, extra = {}) {
+        const now = new Date().toISOString();
+        const payload = {
+          _subject: "💬 Khushi ka full response",
+          "Event": eventName,
+          "Submitted At": prettyTime(now),
+          "Page": responseState.page,
+          "Opened At": prettyTime(responseState.openedAt),
+          "Mood Zone": emptyText(responseState.moodZone),
+          "Song Suggestion": emptyText(responseState.songSuggestion),
+          "Reply Mood": emptyText(responseState.replyMood),
+          "Reply Text": emptyText(responseState.replyText),
+          "Ek Free Text": emptyText(responseState.ekFreeText),
+          "Ek Baat Answers": prettyEkAnswers(),
+          "Raw Ek Baat JSON": JSON.stringify(responseState.ekBaat, null, 2),
+          ...extra,
+        };
+
+        try {
+          const response = await fetch(FORM_ENDPOINT, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(payload),
+            keepalive: true,
+          });
+          if (!response.ok) throw new Error("Formspree rejected submission");
+          return true;
+        } catch {
+          return false;
+        }
+      }
+
+      /* ---------- MOODS ---------- */
+      const moods = {
+        chill: {
+          icon: "☁️",
+          title: "Chill mode",
+          text: "Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.",
+        },
+        mast: {
+          icon: "✨",
+          title: "Mast mood",
+          text: "Aaj wali vibe bright hai. Music, fun, aur thodi si hasi banti hai.",
+        },
+        busy: {
+          icon: "📚",
+          title: "Busy but okay",
+          text: "Pressure se zyada important tum ho. Ek kaam ek time — wahi kaafi hai.",
+        },
+        overthink: {
+          icon: "🌙",
+          title: "Overthinking alert",
+          text: "Sab answers abhi milna zaroori nahi. Mind ko bas thoda rest chahiye.",
+        },
+        random: {
+          icon: "🎲",
+          title: "Random vibe",
+          text: "Koi fixed mood nahi? Perfect. Random bhi ek mood hota hai.",
+        },
+      };
+      document.querySelectorAll("#moodPills .pill").forEach((btn) => {
+        btn.onclick = () => {
+          document
+            .querySelectorAll("#moodPills .pill")
+            .forEach((b) => b.classList.remove("active"));
+          btn.classList.add("active");
+          const m = moods[btn.dataset.k];
+          document.getElementById("mIcon").textContent = m.icon;
+          document.getElementById("mTitle").textContent = m.title;
+          document.getElementById("mText").textContent = m.text;
+          spawnStars(btn);
+          localStorage.setItem("kMood", btn.dataset.k);
+          updateState("moodZone", btn.dataset.k);
+          captureResponse("mood_selected", {
+            moodKey: btn.dataset.k,
+            moodTitle: m.title,
+          });
+        };
+      });
+      const saved = localStorage.getItem("kMood");
+      if (saved && moods[saved]) {
+        document
+          .querySelectorAll("#moodPills .pill")
+          .forEach((b) => b.classList.remove("active"));
+        const el = document.querySelector(`[data-k="${saved}"]`);
+        if (el) el.classList.add("active");
+        const m = moods[saved];
+        document.getElementById("mIcon").textContent = m.icon;
+        document.getElementById("mTitle").textContent = m.title;
+        document.getElementById("mText").textContent = m.text;
+        updateState("moodZone", saved);
+      }
+
+      /* ---------- NOTES / SONGS ---------- */
+      const notes = [
+        {
+          l: "Kabhi kabhi calm rehna bhi ek talent hota hai.",
+          s: "Aur agar aaj normal feel ho, woh bhi bilkul okay hai.",
+        },
+        {
+          l: "Jo log simple hote hain, unki vibe aksar sabse achhi hoti hai.",
+          s: "Noise kam, originality zyada — best combo.",
+        },
+        {
+          l: "Soft hona weakness nahi hota.",
+          s: "Kabhi kabhi wahi sabse strong quality hoti hai.",
+        },
+        {
+          l: "Kuch log effort se yaad rehte hain.",
+          s: "Bas random fact drop kar raha hoon 🙂",
+        },
+        {
+          l: "Aaj kuch bada achieve na bhi ho, din phir bhi achha ho sakta hai.",
+          s: "Mood bhi ek achievement hota hai.",
+        },
+        {
+          l: "Tum jitni ho, utni hi enough ho.",
+          s: "Isse zyada kuch prove nahi karna.",
+        },
+      ];
+      const songs = [
+        {
+          t: "Iktara",
+          d: "Soft mood ke liye. Headphones lagao aur thoda slow ho jao.",
+        },
+        { t: "Kasoor", d: "Late evening type feel ke liye." },
+        { t: "Shaam", d: "Calm vibe aur khidki ke paas baithne wala mood." },
+        { t: "Kho Gaye Hum Kahan", d: "Akele, light, thoda dreamy mood." },
+        { t: "Ilahi", d: "Agar energy thodi upar chahiye." },
+        { t: "Tum Se Hi", d: "Ek bahut pure wali vibe." },
+      ];
+      const vibes = [
+        {
+          l: "Kya aaj ek chhota sa achha kaam hoga tum se?",
+          s: "No pressure. Bas sochna.",
+        },
+        {
+          l: "Aaj koi ek cheez notice karo jo sundar lage.",
+          s: "Bahut choti bhi chalegi.",
+        },
+        {
+          l: 'Koi ek insaan ko aaj "hi" bolna hai tum se.',
+          s: "Simple hota hai, lekin matter karta hai.",
+        },
+        {
+          l: "Thodi der ke liye phone rakho, bas exist karo.",
+          s: "It counts.",
+        },
+        {
+          l: "Aaj khud ke liye kuch chota sa karo.",
+          s: "Even just a chai break.",
+        },
+      ];
+      function rand(a) {
+        return a[Math.floor(Math.random() * a.length)];
+      }
+      const shuffleNoteBtn = document.getElementById("shuffleNote");
+      if (shuffleNoteBtn) {
+        shuffleNoteBtn.onclick = () => {
+          const n = rand(notes);
+          document.getElementById("noteLine").textContent = n.l;
+          document.getElementById("noteSub").textContent = n.s;
+        };
+      }
+
+      const shuffleSongBtn = document.getElementById("shuffleSong");
+      if (shuffleSongBtn) {
+        shuffleSongBtn.onclick = () => {
+          const s = rand(songs);
+          document.getElementById("songTitle").textContent = s.t;
+          document.getElementById("songDesc").textContent = s.d;
+          captureResponse("song_card_shuffled", {
+            shownSong: s.t,
+            shownSongDesc: s.d,
+          });
+        };
+      }
+
+      const saveSongBtn = document.getElementById("saveSongSuggestion");
+      const songSuggestionInput = document.getElementById("songSuggestion");
+      const songSuggestionMsg = document.getElementById("songSuggestionMsg");
+      if (saveSongBtn && songSuggestionInput) {
+        saveSongBtn.onclick = async () => {
+          const suggestion = songSuggestionInput.value.trim();
+          updateState("songSuggestion", suggestion);
+          const ok = await captureResponse("song_suggestion_saved", {
+            songSuggestion: suggestion || "(empty)",
+          });
+          songSuggestionMsg.textContent = ok
+            ? "✓ song suggestion save ho gaya"
+            : "response local save ho gaya, network issue ho sakta hai";
+        };
+        songSuggestionInput.addEventListener("input", () => {
+          updateState("songSuggestion", songSuggestionInput.value.trim());
+        });
+      }
+
+      const shuffleVibeBtn = document.getElementById("shuffleVibe");
+      if (shuffleVibeBtn) {
+        shuffleVibeBtn.onclick = () => {
+          const v = rand(vibes);
+          document.getElementById("vibeLine").textContent = v.l;
+          document.getElementById("vibeSub").textContent = v.s;
+        };
+      }
+
+      /* ---------- VINYL ---------- */
+      const audio = document.getElementById("song");
+      const vinyl = document.getElementById("vinylWrap");
+      const playBtn = document.getElementById("playBtn");
+      const timeDisp = document.getElementById("timeDisp");
+      const srcs = ["./song", "./song.mp3", "./song.wav", "./song.ogg"];
+      let si = 0;
+      audio.src = srcs[si];
+      audio.load();
+      function fmt(s) {
+        if (!isFinite(s)) return "0:00";
+        return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, "0")}`;
+      }
+      function setUI(p) {
+        playBtn.textContent = p ? "❚❚" : "▶";
+        vinyl.classList.toggle("playing", p);
+      }
+      async function toggle() {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            setUI(true);
+          } catch {}
+        } else {
+          audio.pause();
+          setUI(false);
+        }
+      }
+      playBtn.onclick = toggle;
+      audio.ontimeupdate = () => {
+        timeDisp.textContent = fmt(audio.currentTime);
+      };
+      audio.onended = () => {
+        setUI(false);
+        timeDisp.textContent = "0:00";
+      };
+      audio.onerror = () => {
+        if (si < srcs.length - 1) {
+          si++;
+          audio.src = srcs[si];
+          audio.load();
+        }
+      };
+
+      /* ---------- COUNTDOWN ---------- */
+      function updateClock() {
+        const hEl = document.getElementById("cdH");
+        const mEl = document.getElementById("cdM");
+        const sEl = document.getElementById("cdS");
+        const dEl = document.getElementById("cdD");
+        if (!hEl || !mEl || !sEl || !dEl) return;
+
+        const n = new Date();
+        hEl.textContent = String(n.getHours()).padStart(2, "0");
+        mEl.textContent = String(n.getMinutes()).padStart(2, "0");
+        sEl.textContent = String(n.getSeconds()).padStart(2, "0");
+        const start = new Date(n.getFullYear(), 0, 0);
+        const diff = n - start;
+        dEl.textContent = Math.floor(diff / 86400000);
+      }
+      updateClock();
+      setInterval(updateClock, 1000);
+
+      /* ---------- SCRATCH CARD ---------- */
+      function initScratch() {
+        const canvas = document.getElementById("scratchCanvas");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        ctx.clearRect(0, 0, 220, 80);
+        ctx.fillStyle = "#1a1714";
+        ctx.fillRect(0, 0, 220, 80);
+        ctx.fillStyle = "rgba(255,255,255,.08)";
+        for (let i = 0; i < 220; i += 18) {
+          for (let j = 0; j < 80; j += 18) {
+            ctx.fillRect(i, j, 10, 10);
+          }
+        }
+        ctx.fillStyle = "#fff";
+        ctx.font = "bold 13px Syne, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("✦  scratch karo  ✦", 110, 40);
+        let drawing = false;
+        function scratch(x, y) {
+          ctx.globalCompositeOperation = "destination-out";
+          ctx.beginPath();
+          ctx.arc(x, y, 18, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        function pos(e) {
+          const r = canvas.getBoundingClientRect();
+          if (e.touches)
+            return {
+              x: e.touches[0].clientX - r.left,
+              y: e.touches[0].clientY - r.top,
+            };
+          return { x: e.clientX - r.left, y: e.clientY - r.top };
+        }
+        canvas.onmousedown = (e) => {
+          drawing = true;
+          const p = pos(e);
+          scratch(p.x, p.y);
+        };
+        canvas.onmousemove = (e) => {
+          if (!drawing) return;
+          const p = pos(e);
+          scratch(p.x, p.y);
+        };
+        canvas.onmouseup = () => (drawing = false);
+        canvas.ontouchstart = (e) => {
+          e.preventDefault();
+          drawing = true;
+          const p = pos(e);
+          scratch(p.x, p.y);
+        };
+        canvas.ontouchmove = (e) => {
+          e.preventDefault();
+          if (!drawing) return;
+          const p = pos(e);
+          scratch(p.x, p.y);
+        };
+        canvas.ontouchend = () => (drawing = false);
+      }
+      initScratch();
+      const resetScratchBtn = document.getElementById("resetScratch");
+      if (resetScratchBtn) resetScratchBtn.onclick = initScratch;
+
+      /* ---------- EK BAAT ---------- */
+      const qs = [
+        {
+          q: "Kya main aapka dost banne ke laayak hoon?",
+          opts: [
+            {
+              t: "Haan, bilkul 🙂",
+              r: "Thank you, yeh mere liye kaafi special hai.",
+            },
+            {
+              t: "Pehle aur baat karte hain",
+              r: "Bilkul, slow aur respectfully hi sahi.",
+            },
+            {
+              t: "Sochungi",
+              r: "Fair enough. Aapka honest answer important hai.",
+            },
+          ],
+        },
+        {
+          q: "Kya aap mujhe ek mauka dena chahengi?",
+          opts: [
+            {
+              t: "Haan, ek chance",
+              r: "Main is chance ko respectfully value karunga.",
+            },
+            {
+              t: "Dheere dheere",
+              r: "Perfect. Dosti mein comfort sabse important hai.",
+            },
+            { t: "Abhi sure nahi", r: "No pressure. Aapka comfort first." },
+          ],
+        },
+        {
+          q: "Aapko mujhse baat karna comfortable lagta hai?",
+          opts: [
+            { t: "Haan", r: "Yeh jaan kar genuinely achha laga." },
+            { t: "Thoda time chahiye", r: "Bilkul, jitna time chahiye utna." },
+            {
+              t: "Kabhi kabhi",
+              r: "Understood. Main boundaries respect karunga.",
+            },
+          ],
+        },
+      ];
+
+      let qi = 0;
+      const ekQ = document.getElementById("ekQ");
+      const ekBtns = document.getElementById("ekBtns");
+      const ekResult = document.getElementById("ekResult");
+      const ekProgress = document.getElementById("ekProgress");
+      const ekSummary = document.getElementById("ekSummary");
+      const ekFreeText = document.getElementById("ekFreeText");
+      const saveEkText = document.getElementById("saveEkText");
+
+      function renderEkQuestion() {
+        const d = qs[qi];
+        ekQ.textContent = d.q;
+        ekBtns.innerHTML = "";
+        ekResult.style.display = "none";
+        ekResult.textContent = "";
+        ekProgress.textContent = `Question ${qi + 1} of ${qs.length}`;
+
+        d.opts.forEach((opt, idx) => {
+          const b = document.createElement("button");
+          b.className = "ek-btn yes-btn";
+          b.textContent = opt.t;
+          if (idx > 0) {
+            b.style.background = "rgba(255,255,255,.1)";
+            b.style.color = "#fff";
+          }
+          b.onclick = () => handleEkAnswer(d.q, opt);
+          ekBtns.appendChild(b);
+        });
+      }
+
+      async function handleEkAnswer(question, opt) {
+        const existingIndex = responseState.ekBaat.findIndex(
+          (x) => x.question === question,
+        );
+        const answer = {
+          question,
+          answer: opt.t,
+          messageShown: opt.r,
+          time: new Date().toISOString(),
+        };
+        if (existingIndex >= 0) responseState.ekBaat[existingIndex] = answer;
+        else responseState.ekBaat.push(answer);
+        updateState("ekBaat", responseState.ekBaat);
+
+        ekResult.textContent = opt.r;
+        ekResult.style.display = "block";
+        spawnConfetti();
+
+        await captureResponse("ek_baat_answered", {
+          question,
+          answer: opt.t,
+          messageShown: opt.r,
+        });
+
+        setTimeout(() => {
+          if (qi < qs.length - 1) {
+            qi++;
+            renderEkQuestion();
+          } else {
+            ekProgress.textContent = "All questions answered";
+            ekSummary.style.display = "block";
+            ekSummary.innerHTML =
+              "<strong>Captured:</strong><br>" +
+              responseState.ekBaat
+                .map((x, i) => `${i + 1}. ${x.question}<br>→ ${x.answer}`)
+                .join("<br>");
+            captureResponse("ek_baat_completed", {
+              totalAnswers: responseState.ekBaat.length,
+            });
+          }
+        }, 1100);
+      }
+
+      if (saveEkText && ekFreeText) {
+        ekFreeText.addEventListener("input", () => {
+          updateState("ekFreeText", ekFreeText.value.trim());
+        });
+        saveEkText.onclick = async () => {
+          const freeText = ekFreeText.value.trim();
+          updateState("ekFreeText", freeText);
+          const ok = await captureResponse("ek_free_text_saved", {
+            ekFreeText: freeText || "(empty)",
+          });
+          ekResult.textContent = ok
+            ? "✓ response save ho gaya"
+            : "response local save ho gaya, network issue ho sakta hai";
+          ekResult.style.display = "block";
+        };
+      }
+
+      renderEkQuestion();
+
+      /* ---------- REPLY ---------- */
+      let replyMood = "Chill";
+      document.querySelectorAll("#chips .chip").forEach((c) => {
+        c.onclick = () => {
+          document
+            .querySelectorAll("#chips .chip")
+            .forEach((x) => x.classList.remove("active"));
+          c.classList.add("active");
+          replyMood = c.dataset.v;
+          updateState("replyMood", replyMood);
+          captureResponse("reply_mood_selected", { replyMood });
+        };
+      });
+
+      const replyTextEl = document.getElementById("replyText");
+      if (replyTextEl) {
+        replyTextEl.addEventListener("input", () => {
+          updateState("replyText", replyTextEl.value.trim());
+        });
+      }
+      document.getElementById("sendBtn").onclick = async () => {
+        const text = document.getElementById("replyText").value.trim();
+        const btn = document.getElementById("sendBtn");
+        const msg = document.getElementById("replyMsg");
+        btn.disabled = true;
+        btn.textContent = "Bhej raha hoon...";
+        msg.style.display = "none";
+        updateState("replyText", text);
+
+        const ok = await captureResponse("final_reply_submitted", {
+          "Final Reply": emptyText(text, "(blank reply)"),
+          "Final Mood Tag": replyMood,
+          "All Responses Captured": "Mood zone, song suggestion, ek baat answers, ek free text, reply mood, and final reply.",
+        });
+
+        if (ok) {
+          document.getElementById("replyText").value = "";
+          updateState("replyText", "");
+          msg.textContent = "✓ chala gaya — full response capture ho gaya";
+          msg.className = "reply-msg ok";
+          msg.style.display = "block";
+          spawnConfetti();
+        } else {
+          msg.textContent = "Network issue aaya. Response browser mein safe hai; dobara try karna.";
+          msg.className = "reply-msg err";
+          msg.style.display = "block";
+        }
+
+        btn.disabled = false;
+        btn.textContent = "Bhejo ✦";
+      };
+
+      /* ---------- CONFETTI ---------- */
+      function spawnConfetti() {
+        const colors = [
+          "#d45c3a",
+          "#c8973e",
+          "#5e7a60",
+          "#8b7aad",
+          "#f0ebe3",
+          "#1a1714",
+        ];
+        for (let i = 0; i < 60; i++) {
+          const el = document.createElement("div");
+          el.className = "confetti-piece";
+          el.style.left = Math.random() * 100 + "vw";
+          el.style.top = "-10px";
+          el.style.background =
+            colors[Math.floor(Math.random() * colors.length)];
+          el.style.width = 6 + Math.random() * 8 + "px";
+          el.style.height = 6 + Math.random() * 8 + "px";
+          el.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+          el.style.animationDuration = 1.5 + Math.random() * 2 + "s";
+          el.style.animationDelay = Math.random() * 0.5 + "s";
+          document.body.appendChild(el);
+          el.addEventListener("animationend", () => el.remove());
+        }
+      }
+
+      /* ---------- STARS ON CLICK ---------- */
+      function spawnStars(el) {
+        const r = el.getBoundingClientRect();
+        const emojis = ["✦", "★", "✨", "·", "⬡"];
+        for (let i = 0; i < 6; i++) {
+          const s = document.createElement("div");
+          s.className = "star";
+          s.textContent = emojis[Math.floor(Math.random() * emojis.length)];
+          s.style.left =
+            r.left + r.width / 2 + (-30 + Math.random() * 60) + "px";
+          s.style.top = r.top + (-10 + Math.random() * 20) + "px";
+          s.style.color = ["#d45c3a", "#c8973e", "#8b7aad"][
+            Math.floor(Math.random() * 3)
+          ];
+          s.style.animationDelay = Math.random() * 0.3 + "s";
+          document.body.appendChild(s);
+          s.addEventListener("animationend", () => s.remove());
+        }
+      }
+      document
+        .querySelectorAll(".pill,.chip")
+        .forEach((el) => el.addEventListener("click", () => spawnStars(el)));
+
+      /* ---------- SECRET EGG ---------- */
+      const seq = ["k", "h", "u", "s", "h", "i"];
+      let ki = 0;
+      document.addEventListener("keydown", (e) => {
+        if (e.key.toLowerCase() === seq[ki]) {
+          ki++; 
+          if (ki === seq.length) {
+            document.getElementById("eggOverlay").classList.add("show");
+            ki = 0;
+            spawnConfetti();
+          }
+        } else ki = 0;
+      });
+    </script>
+  </body>
+</html>
