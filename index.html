@@ -4,1024 +4,986 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <title>Khushi ke liye</title>
+    <meta name="theme-color" content="#211714" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,600;1,300;1,600&family=Syne:wght@400;700;800&family=Space+Mono&display=swap" rel="stylesheet" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,500;1,600&family=Inter:wght@400;500;600;700;800&family=Space+Mono&display=swap" rel="stylesheet" />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
       :root {
-        --bg: #f0ebe3;
-        --ink: #1a1714;
-        --paper: #faf8f5;
-        --r: #d45c3a;
-        --gold: #c8973e;
-        --sage: #5e7a60;
-        --lilac: #8b7aad;
-        --warm: #e8e0d4;
-        --muted: #9a8f84;
+        --ink: #201614;
+        --ink-2: #3a2520;
+        --cream: #fff8ef;
+        --paper: rgba(255, 250, 242, .82);
+        --paper-solid: #fffaf2;
+        --rose: #e45b78;
+        --rose-2: #ff8aa3;
+        --coral: #ee7156;
+        --gold: #e7b552;
+        --sage: #6d8f72;
+        --lilac: #9a82d7;
+        --muted: #8b746a;
+        --line: rgba(49, 31, 27, .12);
+        --shadow: 0 22px 55px rgba(40, 22, 18, .16);
         --safe-bottom: env(safe-area-inset-bottom, 0px);
       }
+
       html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+
       body {
-        font-family: "Syne", sans-serif;
-        background: var(--bg);
+        min-height: 100dvh;
+        font-family: "Inter", system-ui, sans-serif;
         color: var(--ink);
+        background:
+          radial-gradient(circle at 20% 0%, rgba(255, 138, 163, .35), transparent 28rem),
+          radial-gradient(circle at 90% 18%, rgba(231, 181, 82, .24), transparent 24rem),
+          linear-gradient(145deg, #f7dfd0 0%, #fff7ec 42%, #eadfd8 100%);
         overflow-x: hidden;
-        cursor: none;
       }
 
-      /* NAV */
-      nav {
-        position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-        padding: 18px 24px;
-        display: flex; justify-content: space-between; align-items: center;
-        mix-blend-mode: multiply;
-      }
-      .nav-logo { font-family: "Cormorant Garamond", serif; font-size: 22px; font-weight: 600; letter-spacing: -.5px; }
-      .nav-links { display: flex; gap: 20px; }
-      .nav-links a {
-        font-size: 10px; color: var(--muted); text-decoration: none;
-        letter-spacing: 2px; text-transform: uppercase; transition: .2s; font-weight: 700;
-      }
-      .nav-links a:hover, .nav-links a:active { color: var(--ink); }
+      button, input, textarea { font: inherit; }
+      button { -webkit-tap-highlight-color: transparent; }
+      a { color: inherit; }
 
-      /* MARQUEE */
+      .app {
+        width: 100%;
+        max-width: 440px;
+        min-height: 100dvh;
+        margin: 0 auto;
+        background:
+          linear-gradient(180deg, rgba(255,248,239,.66), rgba(255,248,239,.94)),
+          radial-gradient(circle at 12% 8%, rgba(255,255,255,.9), transparent 8rem);
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 0 0 1px rgba(255,255,255,.4);
+      }
+
+      .app::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        pointer-events: none;
+        opacity: .055;
+        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+        z-index: 1;
+      }
+
+      .floating-orb {
+        position: absolute;
+        border-radius: 999px;
+        filter: blur(.5px);
+        pointer-events: none;
+        z-index: 0;
+        animation: floatOrb 8s ease-in-out infinite;
+      }
+      .orb-one { width:148px;height:148px;right:-60px;top:110px;background:radial-gradient(circle,rgba(255,138,163,.45),transparent 72%); }
+      .orb-two { width:120px;height:120px;left:-54px;top:460px;background:radial-gradient(circle,rgba(231,181,82,.36),transparent 72%);animation-delay:-2.6s; }
+      .orb-three { width:150px;height:150px;right:-70px;bottom:210px;background:radial-gradient(circle,rgba(154,130,215,.28),transparent 72%);animation-delay:-4s; }
+
+      @keyframes floatOrb {
+        0%,100%{transform:translate3d(0,0,0) scale(1);}
+        50%{transform:translate3d(8px,-18px,0) scale(1.05);}
+      }
+
+      .content { position: relative; z-index: 2; }
+
+      .topbar {
+        position: sticky; top: 0; z-index: 40;
+        padding: 12px 14px;
+        padding-top: max(12px, env(safe-area-inset-top));
+        background: rgba(255,248,239,.76);
+        backdrop-filter: blur(18px);
+        border-bottom: 1px solid rgba(49,31,27,.08);
+      }
+
+      .topbar-inner {
+        min-height: 48px;
+        display: flex; align-items: center; justify-content: space-between; gap: 12px;
+        border: 1px solid rgba(49,31,27,.08);
+        background: rgba(255,255,255,.46);
+        border-radius: 999px;
+        padding: 7px 8px 7px 14px;
+        box-shadow: 0 10px 30px rgba(49,31,27,.06);
+      }
+
+      .brand { display:flex;align-items:center;gap:9px;font-weight:800;letter-spacing:-.3px; }
+      .brand-mark {
+        width:34px;height:34px;border-radius:50%;display:grid;place-items:center;
+        background:linear-gradient(135deg,var(--ink),#5a2d28);
+        color:#fff7ec;font-family:"Cormorant Garamond",serif;font-size:22px;font-style:italic;
+        box-shadow:0 10px 22px rgba(32,22,20,.22);
+      }
+
+      .nav-pills { display:flex;gap:6px;align-items:center; }
+      .nav-pills a {
+        text-decoration:none;font-size:10px;font-weight:800;letter-spacing:.7px;text-transform:uppercase;
+        padding:9px 10px;border-radius:999px;color:rgba(32,22,20,.68);background:rgba(255,255,255,.5);
+      }
+
       .marquee-wrap {
-        background: var(--r); color: #fff; padding: 12px 0;
-        overflow: hidden; display: flex; position: relative; z-index: 10;
+        position:relative;z-index:3;width:100%;overflow:hidden;padding:10px 0;
+        background:linear-gradient(90deg,#201614,#572620 46%,#201614);
+        color:#fff8ef;border-bottom:1px solid rgba(255,255,255,.12);
       }
       .marquee-inner {
-        display: flex; gap: 0; white-space: nowrap;
-        animation: marquee 18s linear infinite;
+        display:flex;width:max-content;white-space:nowrap;animation:marquee 18s linear infinite;
       }
       .marquee-inner span {
-        font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
-        font-weight: 700; padding: 0 24px;
+        display:inline-flex;align-items:center;gap:14px;padding:0 13px;
+        font-size:10px;font-weight:800;letter-spacing:2.2px;text-transform:uppercase;
       }
-      .marquee-inner span::after { content: "✦"; margin-left: 24px; opacity: .5; }
-      @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+      .marquee-inner span::after { content:"✦";color:var(--gold);opacity:.9; }
+      @keyframes marquee { from{transform:translateX(0);}to{transform:translateX(-50%);} }
 
-      /* HERO */
-      .hero {
-        min-height: 100dvh;
-        display: grid;
-        grid-template-columns: 1.1fr 0.9fr;
+      .hero { padding: 22px 16px 20px; }
+
+      .hero-card {
+        position:relative;min-height:545px;border-radius:34px;overflow:hidden;color:#fff9f0;
+        background:
+          radial-gradient(circle at 18% 0%,rgba(255,138,163,.44),transparent 18rem),
+          radial-gradient(circle at 92% 30%,rgba(231,181,82,.24),transparent 16rem),
+          linear-gradient(160deg,#1d1413 0%,#37201d 48%,#6e3028 100%);
+        box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.14);
       }
-      .hero-left {
-        background: var(--ink); color: var(--paper);
-        padding: 110px 48px 56px;
-        display: flex; flex-direction: column; justify-content: flex-end;
-        position: relative; overflow: hidden;
-      }
-      .hero-noise {
-        position: absolute; inset: 0; pointer-events: none; opacity: .03;
-        background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-        background-size: 200px;
-      }
-      .hero-line {
-        position: absolute; right: 0; top: 0; bottom: 0; width: 1px;
-        background: linear-gradient(to bottom, transparent, rgba(255,255,255,.15) 40%, rgba(255,255,255,.15) 60%, transparent);
-      }
-      .hero-eyebrow {
-        font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-        color: rgba(255,255,255,.3); margin-bottom: 24px; font-family: "Space Mono", monospace;
-      }
-      .hero-h1 {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(54px, 6.5vw, 100px);
-        line-height: .88; font-weight: 600; letter-spacing: -3px; margin-bottom: 32px;
-      }
-      .hero-h1 em { font-style: italic; font-weight: 300; color: var(--gold); }
-      .hero-tagline {
-        font-size: 15px; color: rgba(255,255,255,.4); line-height: 1.8;
-        max-width: 260px; font-family: "Cormorant Garamond", serif; font-style: italic;
-      }
-      .hero-badge {
-        position: absolute; top: 50%; right: -1px;
-        transform: translateY(-50%);
-        width: 72px; height: 72px; border-radius: 50%; background: var(--r);
-        display: grid; place-items: center; font-size: 8px; letter-spacing: 2px;
-        text-transform: uppercase; color: #fff; text-align: center; line-height: 1.4;
-        font-weight: 700; animation: badgeSpin 12s linear infinite;
-      }
-      @keyframes badgeSpin {
-        0% { transform: translateY(-50%) rotate(0); }
-        100% { transform: translateY(-50%) rotate(360deg); }
-      }
-      .hero-right {
-        background: var(--warm);
-        display: flex; flex-direction: column; justify-content: center;
-        align-items: center; padding: 80px 32px; gap: 28px; position: relative;
-      }
-      .hero-right-bg { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
-      .hero-right-bg::before {
-        content: ""; position: absolute; width: 360px; height: 360px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(200,151,62,.15) 0%, transparent 70%);
-        top: 50%; left: 50%; transform: translate(-50%, -50%);
+      .hero-card::before {
+        content:"";position:absolute;inset:0;opacity:.12;
+        background:
+          linear-gradient(110deg,transparent 0 30%,rgba(255,255,255,.16) 31%,transparent 36% 100%),
+          repeating-linear-gradient(90deg,rgba(255,255,255,.035) 0 1px,transparent 1px 46px);
+        pointer-events:none;
       }
 
-      /* VINYL */
-      .vinyl-container { width: 200px; height: 200px; position: relative; cursor: pointer; }
-      .vinyl-outer {
-        width: 100%; height: 100%; border-radius: 50%;
-        background: repeating-conic-gradient(#111 0deg, #1c1c1c 2deg, #111 4deg, #1a1a1a 6deg);
-        box-shadow: 0 0 0 1px rgba(255,255,255,.05), 0 24px 56px rgba(0,0,0,.3);
-        transition: .3s; display: grid; place-items: center;
+      .hero-title {
+        position:relative;z-index:2;padding:50px 22px 0;
       }
-      .vinyl-container.playing .vinyl-outer { animation: spin 2.5s linear infinite; }
-      @keyframes spin { to { transform: rotate(360deg); } }
-      .vinyl-shine {
-        position: absolute; inset: 0; border-radius: 50%;
-        background: conic-gradient(from 30deg, transparent 0deg, rgba(255,255,255,.06) 60deg, transparent 120deg);
-        pointer-events: none;
+      h1 {
+        font-family:"Cormorant Garamond",serif;font-weight:600;
+        font-size:clamp(58px,17vw,82px);line-height:.84;letter-spacing:-3px;
       }
-      .vinyl-label {
-        width: 72px; height: 72px; border-radius: 50%; background: var(--r);
-        display: grid; place-items: center; font-family: "Cormorant Garamond", serif;
-        font-style: italic; font-size: 18px; color: #fff;
-        border: 5px solid var(--warm);
-        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); z-index: 2;
+      h1 em { font-style:italic;color:#ffd27b;text-shadow:0 0 26px rgba(255,210,123,.26); }
+
+      .hero-copy {
+        margin-top:18px;max-width:310px;color:rgba(255,248,239,.68);
+        font-family:"Cormorant Garamond",serif;font-style:italic;font-size:19px;line-height:1.55;
       }
-      .vinyl-inner-ring {
-        position: absolute; width: 90px; height: 90px; border-radius: 50%;
-        border: 1px solid rgba(255,255,255,.06);
-        top: 50%; left: 50%; transform: translate(-50%, -50%);
+
+      .hero-actions {
+        position:absolute;left:18px;right:18px;bottom:18px;z-index:3;display:grid;gap:12px;
       }
-      .vinyl-inner-ring2 {
-        position: absolute; width: 148px; height: 148px; border-radius: 50%;
-        border: 1px solid rgba(255,255,255,.04);
-        top: 50%; left: 50%; transform: translate(-50%, -50%);
+
+      .music-panel {
+        display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;padding:13px;
+        border-radius:24px;background:rgba(255,248,239,.11);border:1px solid rgba(255,255,255,.14);
+        backdrop-filter:blur(14px);
       }
-      .play-controls { display: flex; align-items: center; gap: 14px; z-index: 1; }
+
+      .vinyl {
+        position:relative;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
+        background:repeating-conic-gradient(#0d0c0d 0deg,#242020 3deg,#111 7deg),#111;
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 10px 24px rgba(0,0,0,.24);
+        cursor:pointer;
+      }
+      .vinyl.playing { animation:spin 2.6s linear infinite; }
+      .vinyl::before { content:"";position:absolute;inset:13px;border-radius:50%;border:1px solid rgba(255,255,255,.08); }
+      .vinyl::after {
+        content:"♪";width:32px;height:32px;border-radius:50%;display:grid;place-items:center;
+        background:linear-gradient(135deg,var(--rose),var(--gold));color:var(--ink);font-weight:900;z-index:1;
+      }
+      @keyframes spin { to{transform:rotate(360deg);} }
+
+      .track-info strong { display:block;font-size:13px;color:#fff8ef;margin-bottom:4px; }
+      .track-info span { display:block;font-family:"Space Mono",monospace;font-size:10px;letter-spacing:.6px;color:rgba(255,248,239,.54); }
+
       .play-btn {
-        width: 52px; height: 52px; border-radius: 50%; background: var(--ink);
-        color: #fff; border: none; cursor: pointer; font-size: 14px;
-        display: grid; place-items: center; transition: .2s;
-        box-shadow: 0 8px 24px rgba(0,0,0,.2); -webkit-tap-highlight-color: transparent;
-      }
-      .play-btn:hover { transform: scale(1.06); background: var(--r); }
-      .play-btn:active { transform: scale(.96); }
-      .track-info { font-size: 12px; color: var(--muted); font-family: "Space Mono", monospace; }
-      .track-info span { display: block; font-size: 10px; opacity: .6; margin-top: 3px; }
-      .autoplay-hint {
-        font-size: 10px; color: var(--muted); font-family: "Space Mono", monospace;
-        letter-spacing: 1px; opacity: .7; text-align: center;
-        animation: pulse 2s ease-in-out infinite;
-      }
-      @keyframes pulse { 0%,100% { opacity: .4; } 50% { opacity: .9; } }
-      audio { display: none; }
-
-      /* S-LABEL */
-      .s-label {
-        font-size: 10px; letter-spacing: 4px; text-transform: uppercase;
-        color: var(--muted); margin-bottom: 14px; font-family: "Space Mono", monospace;
+        width:52px;height:52px;border-radius:50%;border:0;display:grid;place-items:center;
+        background:#fff8ef;color:var(--ink);box-shadow:0 12px 28px rgba(0,0,0,.24);font-weight:900;cursor:pointer;
       }
 
-      /* MOOD */
-      .mood-section {
-        padding: 100px 48px;
-        display: grid; grid-template-columns: 0.8fr 1.2fr;
-        gap: 64px; align-items: start;
+      .mini-stat-row { display:grid;grid-template-columns:1fr 1fr;gap:10px; }
+      .mini-stat {
+        min-height:74px;padding:14px;border-radius:22px;
+        background:rgba(255,248,239,.12);border:1px solid rgba(255,255,255,.13);backdrop-filter:blur(14px);
       }
-      .mood-heading {
-        font-family: "Cormorant Garamond", serif;
-        font-size: clamp(42px, 5vw, 68px);
-        line-height: .9; letter-spacing: -2px;
+      .mini-stat span { display:block;font-family:"Space Mono",monospace;font-size:9px;letter-spacing:2px;text-transform:uppercase;color:rgba(255,248,239,.48);margin-bottom:6px; }
+      .mini-stat b { font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:600;letter-spacing:-.4px; }
+
+      .section { padding: 28px 16px 0; }
+
+      .section-head { display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:15px; }
+
+      .label { font-family:"Space Mono",monospace;font-size:10px;letter-spacing:2.7px;text-transform:uppercase;color:var(--muted);margin-bottom:7px; }
+
+      h2 { font-family:"Cormorant Garamond",serif;font-size:clamp(38px,12vw,55px);line-height:.9;letter-spacing:-1.8px;font-weight:600; }
+      h2 em { font-style:italic;color:var(--rose); }
+
+      .glass-card {
+        border-radius:30px;background:var(--paper);
+        border:1px solid rgba(255,255,255,.68);
+        box-shadow:0 16px 42px rgba(49,31,27,.09);
+        backdrop-filter:blur(18px);overflow:hidden;
       }
-      .mood-heading em { font-style: italic; font-weight: 300; color: var(--sage); }
-      .mood-pills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 28px; }
+
+      .pad { padding: 18px; }
+
+      .pill-grid { display:flex;gap:8px;flex-wrap:wrap; }
+
       .pill {
-        padding: 10px 20px; border-radius: 999px;
-        border: 1.5px solid var(--warm); background: transparent;
-        font-family: "Syne", sans-serif; font-size: 12px; cursor: pointer;
-        color: var(--muted); transition: .25s; font-weight: 700; letter-spacing: .5px;
-        -webkit-tap-highlight-color: transparent;
+        border:1px solid rgba(49,31,27,.12);border-radius:999px;padding:11px 14px;
+        background:rgba(255,255,255,.56);color:rgba(32,22,20,.7);
+        font-size:12px;font-weight:800;letter-spacing:-.1px;
+        box-shadow:0 8px 18px rgba(49,31,27,.05);cursor:pointer;
       }
-      .pill.active, .pill:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-      .pill:active { transform: scale(.96); }
-      .mood-card { background: var(--paper); border-radius: 24px; padding: 28px; box-shadow: 0 2px 40px rgba(0,0,0,.06); transition: .3s; }
-      .mood-card-inner { display: flex; align-items: flex-start; gap: 18px; }
-      .mood-emoji {
-        font-size: 44px; flex-shrink: 0; width: 64px; height: 64px;
-        border-radius: 16px; background: var(--warm); display: grid; place-items: center;
-      }
-      .mood-title { font-family: "Cormorant Garamond", serif; font-size: 28px; font-weight: 600; margin-bottom: 6px; letter-spacing: -.5px; }
-      .mood-text { font-size: 14px; color: var(--muted); line-height: 1.8; }
-
-      /* WIDGETS */
-      .widgets { padding: 0 48px 100px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
-      .w-card {
-        background: var(--paper); border-radius: 22px; padding: 24px;
-        position: relative; overflow: hidden; transition: transform .2s;
-      }
-      .w-card:hover { transform: translateY(-3px); }
-      .w-card.accent-r { background: var(--r); color: #fff; }
-      .w-card.accent-g { background: var(--sage); color: #fff; }
-      .w-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; }
-      .w-tag { font-size: 10px; letter-spacing: 3px; text-transform: uppercase; opacity: .55; font-family: "Space Mono", monospace; }
-      .w-ico {
-        width: 32px; height: 32px; border-radius: 50%; border: none;
-        cursor: pointer; font-size: 13px; display: grid; place-items: center;
-        transition: .2s; -webkit-tap-highlight-color: transparent;
-        background: var(--ink); color: #fff;
-      }
-      .w-card.accent-r .w-ico, .w-card.accent-g .w-ico { background: rgba(255,255,255,.2); color: #fff; }
-      .w-ico:hover { transform: rotate(120deg); }
-      .w-big { font-family: "Cormorant Garamond", serif; font-size: clamp(17px, 2vw, 22px); line-height: 1.25; letter-spacing: -.3px; margin-bottom: 8px; }
-      .w-small { font-size: 13px; opacity: .6; line-height: 1.7; }
-
-      /* EK BAAT */
-      .ek-baat {
-        margin: 0 48px 100px;
-        background: var(--ink); color: var(--paper);
-        border-radius: 28px; padding: 64px 56px;
-        display: grid; grid-template-columns: 1fr 1fr;
-        gap: 56px; align-items: center;
-        position: relative; overflow: hidden;
-      }
-      .ek-deco { position: absolute; right: -60px; top: -60px; width: 260px; height: 260px; border-radius: 50%; border: 1px solid rgba(255,255,255,.05); }
-      .ek-deco2 { position: absolute; right: -20px; top: -20px; width: 180px; height: 180px; border-radius: 50%; border: 1px solid rgba(255,255,255,.04); }
-      .ek-heading { font-family: "Cormorant Garamond", serif; font-size: clamp(42px, 5vw, 68px); line-height: .9; letter-spacing: -2px; }
-      .ek-heading em { font-style: italic; color: var(--gold); }
-      .ek-sub { font-size: 13px; color: rgba(255,255,255,.4); margin-top: 14px; line-height: 1.8; }
-      .ek-right { display: flex; flex-direction: column; gap: 18px; }
-      .ek-q-card { background: rgba(255,255,255,.05); border-radius: 18px; padding: 22px; border: 1px solid rgba(255,255,255,.07); }
-      .ek-q { font-size: 16px; line-height: 1.6; margin-bottom: 16px; color: rgba(255,255,255,.85); }
-      .ek-btns { display: flex; gap: 10px; flex-wrap: wrap; min-height: 44px; }
-      .ek-btn {
-        padding: 10px 20px; border-radius: 999px;
-        font-family: "Syne", sans-serif; font-size: 12px; font-weight: 700;
-        cursor: pointer; border: none; transition: .25s; letter-spacing: .3px;
-        -webkit-tap-highlight-color: transparent;
-      }
-      .yes-btn { background: var(--gold); color: var(--ink); }
-      .yes-btn:hover { transform: scale(1.04); }
-      .yes-btn:active { transform: scale(.96); }
-      .ek-res {
-        font-size: 15px; color: var(--gold); display: none; margin-top: 10px;
-        font-family: "Cormorant Garamond", serif; font-style: italic;
-      }
-      .ek-free-response {
-        width: 100%; min-height: 78px; resize: vertical; margin-top: 14px;
-        border-radius: 14px; padding: 14px 16px;
-        border: 1.5px solid rgba(255,255,255,.1); background: rgba(255,255,255,.06);
-        color: var(--paper); font-family: "Cormorant Garamond", serif; font-size: 16px;
-        outline: none; line-height: 1.6; font-size: 16px;
-      }
-      .ek-free-response:focus { border-color: var(--gold); }
-      .ek-free-response::placeholder { color: rgba(255,255,255,.35); }
-      .ek-progress { margin-top: 12px; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; color: rgba(255,255,255,.35); font-family: "Space Mono", monospace; }
-      .ek-summary { display: none; margin-top: 14px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,.08); font-size: 13px; color: rgba(255,255,255,.55); line-height: 1.7; }
-
-      /* REPLY */
-      .reply-section { padding: 0 48px 100px; }
-      .reply-inner { background: var(--paper); border-radius: 28px; padding: 48px; display: grid; grid-template-columns: 1fr 1.2fr; gap: 48px; align-items: start; }
-      .reply-heading { font-family: "Cormorant Garamond", serif; font-size: clamp(34px, 4vw, 52px); line-height: .95; letter-spacing: -1.5px; margin-bottom: 12px; }
-      .reply-heading em { font-style: italic; color: var(--r); }
-      .reply-sub { font-size: 14px; color: var(--muted); line-height: 1.8; }
-      .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
-      .chip {
-        padding: 8px 16px; border-radius: 999px; border: 1.5px solid var(--warm);
-        background: transparent; font-family: "Syne", sans-serif; font-size: 11px;
-        cursor: pointer; color: var(--muted); transition: .2s; font-weight: 700;
-        letter-spacing: .5px; -webkit-tap-highlight-color: transparent;
-      }
-      .chip.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
-      .chip:active { transform: scale(.96); }
-      textarea {
-        width: 100%; min-height: 100px; resize: vertical; border-radius: 14px;
-        padding: 16px; border: 1.5px solid var(--warm); background: var(--bg);
-        font-family: "Cormorant Garamond", serif; font-size: 16px; color: var(--ink);
-        outline: none; line-height: 1.7; -webkit-appearance: none;
-      }
-      textarea:focus { border-color: var(--r); }
-      textarea::placeholder { color: rgba(26,23,20,.3); }
-      .send-row { display: flex; justify-content: flex-end; margin-top: 12px; }
-      .send-btn {
-        padding: 14px 28px; border-radius: 999px; background: var(--ink);
-        color: var(--paper); border: none; font-family: "Syne", sans-serif;
-        font-size: 13px; font-weight: 700; cursor: pointer; transition: .2s;
-        letter-spacing: .5px; -webkit-tap-highlight-color: transparent;
-      }
-      .send-btn:hover { background: var(--r); }
-      .send-btn:active { transform: scale(.96); }
-      .send-btn:disabled { opacity: .5; }
-      .reply-msg { margin-top: 10px; font-size: 12px; display: none; font-family: "Space Mono", monospace; }
-      .reply-msg.ok { color: var(--sage); }
-      .reply-msg.err { color: var(--r); }
-
-      /* MINI INPUTS */
-      .mini-input {
-        width: 100%; border-radius: 12px; padding: 12px 14px;
-        border: 1.5px solid var(--warm); background: var(--bg);
-        color: var(--ink); font-family: "Syne", sans-serif; font-size: 14px;
-        outline: none; margin: 8px 0 10px; -webkit-appearance: none;
-      }
-      .mini-input:focus { border-color: var(--r); }
-      .mini-input.light {
-        background: rgba(255,255,255,.12); color: #fff;
-        border-color: rgba(255,255,255,.18);
-      }
-      .mini-input.light::placeholder { color: rgba(255,255,255,.55); }
-      .mini-save-btn {
-        padding: 10px 20px; border-radius: 999px; background: var(--gold);
-        color: var(--ink); border: none; font-family: "Syne", sans-serif;
-        font-size: 12px; font-weight: 800; cursor: pointer; transition: .2s;
-        -webkit-tap-highlight-color: transparent;
-      }
-      .mini-save-btn:hover { transform: translateY(-1px); }
-      .mini-save-btn:active { transform: scale(.96); }
-      .capture-hint { font-size: 11px; opacity: .6; line-height: 1.6; margin-top: 8px; }
-
-      /* FOOTER */
-      .about-footer {
-        margin-top: 40px; padding: 64px 48px 36px; background: #1a1714;
-        color: #faf8f5; position: relative; overflow: hidden;
-        border-top-left-radius: 32px; border-top-right-radius: 32px;
-      }
-      .footer-glow {
-        position: absolute; width: 320px; height: 320px;
-        right: -100px; top: -120px; border-radius: 50%;
-        background: radial-gradient(circle, rgba(200,151,62,.24), transparent 70%);
-        pointer-events: none;
-      }
-      .about-footer-inner {
-        position: relative; z-index: 1;
-        display: grid; grid-template-columns: 1.2fr 0.8fr;
-        gap: 48px; align-items: center;
-      }
-      .about-label {
-        display: inline-block; font-family: "Space Mono", monospace; font-size: 10px;
-        letter-spacing: 4px; text-transform: uppercase; color: #c8973e; margin-bottom: 14px;
-      }
-      .about-left h2 { font-family: "Cormorant Garamond", serif; font-size: clamp(40px, 5.5vw, 70px); line-height: .9; letter-spacing: -2px; margin-bottom: 20px; }
-      .about-left p { max-width: 600px; font-size: 14px; line-height: 1.9; color: rgba(250,248,245,.66); }
-      .about-right { display: flex; flex-wrap: wrap; gap: 10px; justify-content: flex-end; }
-      .about-chip {
-        padding: 10px 18px; border-radius: 999px;
-        background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1);
-        font-size: 12px; font-weight: 700; letter-spacing: .4px;
-        color: rgba(250,248,245,.8); transition: .25s;
-        -webkit-tap-highlight-color: transparent;
-      }
-      .about-chip:hover { background: #c8973e; color: #1a1714; transform: translateY(-3px); }
-      .about-footer-bottom {
-        position: relative; z-index: 1; margin-top: 48px; padding-top: 20px;
-        border-top: 1px solid rgba(255,255,255,.08);
-        display: flex; justify-content: space-between; gap: 16px;
-        font-family: "Space Mono", monospace; font-size: 10px;
-        letter-spacing: 2px; text-transform: uppercase; color: rgba(250,248,245,.35);
-        padding-bottom: var(--safe-bottom);
+      .pill.active {
+        color:#fff8ef;background:linear-gradient(135deg,var(--ink),#5f3028);border-color:transparent;
       }
 
-      /* EGG */
+      .mood-display {
+        margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
+        padding:16px;border-radius:24px;
+        background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.32));
+        border:1px solid rgba(49,31,27,.08);
+      }
+      .mood-emoji { width:60px;height:60px;border-radius:21px;display:grid;place-items:center;font-size:32px;background:linear-gradient(135deg,rgba(228,91,120,.17),rgba(231,181,82,.2)); }
+      .mood-title { font-size:18px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px; }
+      .mood-text { font-size:13px;color:var(--muted);line-height:1.65; }
+
+      .song-card { display:grid;gap:12px; }
+      .song-top { display:flex;align-items:center;justify-content:space-between;gap:12px; }
+      .song-title { font-family:"Cormorant Garamond",serif;font-size:25px;line-height:1.08;letter-spacing:-.8px;font-weight:600; }
+
+      .icon-btn {
+        width:44px;height:44px;flex:0 0 auto;border-radius:50%;border:0;display:grid;place-items:center;
+        color:#fff8ef;background:linear-gradient(135deg,var(--rose),var(--coral));
+        box-shadow:0 12px 24px rgba(228,91,120,.22);font-weight:900;cursor:pointer;
+      }
+
+      .field { display:grid;gap:8px;margin-top:12px; }
+      .field label { font-size:12px;font-weight:900;letter-spacing:-.1px;color:rgba(32,22,20,.78); }
+
+      input, textarea {
+        width:100%;border:1px solid rgba(49,31,27,.12);border-radius:19px;
+        background:rgba(255,255,255,.64);color:var(--ink);outline:none;padding:15px;
+        font-size:16px;box-shadow:inset 0 1px 0 rgba(255,255,255,.55);-webkit-appearance:none;
+      }
+      textarea { min-height:118px;resize:vertical;line-height:1.6; }
+      input:focus, textarea:focus { border-color:rgba(228,91,120,.55);box-shadow:0 0 0 4px rgba(228,91,120,.12); }
+
+      .question-card { display:grid;gap:15px; }
+
+      .q-status { display:flex;align-items:center;justify-content:space-between;gap:12px; }
+      .q-count { font-family:"Space Mono",monospace;font-size:10px;letter-spacing:1.7px;color:var(--muted);text-transform:uppercase; }
+
+      .progress-track { flex:1;height:8px;border-radius:999px;background:rgba(49,31,27,.09);overflow:hidden; }
+      .progress-bar { height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width .3s ease; }
+
+      .question-text { font-family:"Cormorant Garamond",serif;font-size:27px;line-height:1.12;letter-spacing:-.7px; }
+
+      .option-grid { display:grid;gap:9px; }
+      .option-btn {
+        width:100%;border:1px solid rgba(49,31,27,.12);border-radius:19px;padding:14px;
+        background:rgba(255,255,255,.64);color:var(--ink);font-weight:900;text-align:left;
+        display:flex;align-items:center;justify-content:space-between;gap:10px;cursor:pointer;
+      }
+      .option-btn::after { content:"→";opacity:.45; }
+      .option-btn.selected { border-color:transparent;color:#fff8ef;background:linear-gradient(135deg,var(--ink),#63322b); }
+
+      .response-box {
+        display:none;padding:13px 14px;border-radius:18px;
+        background:rgba(231,181,82,.15);color:#6d4519;font-size:13px;font-weight:800;line-height:1.55;
+      }
+
+      /* Submit section */
+      .submit-section { padding: 28px 16px calc(100px + var(--safe-bottom)); }
+
+      .submit-card {
+        border-radius:32px;padding:22px;
+        background:
+          radial-gradient(circle at 12% 0%,rgba(255,138,163,.22),transparent 10rem),
+          linear-gradient(145deg,#211614,#4f2824);
+        color:#fff8ef;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.12);
+        display:grid;gap:14px;
+      }
+
+      .submit-emotion {
+        font-family:"Cormorant Garamond",serif;font-size:32px;line-height:1.1;letter-spacing:-.8px;font-weight:600;
+      }
+
+      .submit-emotion em { font-style:italic;color:#ffd27b; }
+
+      .submit-note {
+        color:rgba(255,248,239,.6);font-size:12.5px;line-height:1.7;
+      }
+
+      .submit-btn {
+        width:100%;min-height:56px;border:0;border-radius:999px;color:var(--ink);
+        background:linear-gradient(135deg,#fff8ef,#ffd37e);font-weight:1000;letter-spacing:-.2px;
+        box-shadow:0 14px 32px rgba(0,0,0,.18);cursor:pointer;font-size:15px;
+        transition:opacity .2s, transform .1s;
+      }
+      .submit-btn:active { transform:scale(.98); }
+      .submit-btn:disabled { opacity:.55;cursor:not-allowed; }
+
+      .mailto-btn {
+        width:100%;min-height:48px;border:1px solid rgba(255,255,255,.22);border-radius:999px;
+        color:rgba(255,248,239,.78);background:rgba(255,255,255,.08);
+        font-weight:800;letter-spacing:-.1px;cursor:pointer;font-size:13px;
+        backdrop-filter:blur(8px);
+      }
+
+      .status-msg { display:none;margin-top:4px;padding:12px 13px;border-radius:17px;font-size:12px;line-height:1.55; }
+      .status-msg.ok { display:block;background:rgba(109,143,114,.2);color:#d9f7dd; }
+      .status-msg.err { display:block;background:rgba(228,91,120,.18);color:#ffe1e8; }
+
+      .sticky-submit {
+        position:fixed;left:50%;bottom:0;transform:translateX(-50%);
+        width:min(100%,440px);z-index:45;
+        padding:10px 14px calc(10px + var(--safe-bottom));
+        background:linear-gradient(180deg,transparent,rgba(255,248,239,.94) 30%);
+        pointer-events:none;
+      }
+      .sticky-inner {
+        pointer-events:auto;display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+        border:1px solid rgba(49,31,27,.1);border-radius:999px;padding:9px 9px 9px 15px;
+        background:rgba(255,255,255,.86);backdrop-filter:blur(16px);
+        box-shadow:0 12px 34px rgba(49,31,27,.16);
+      }
+      .sticky-copy { font-size:11px;color:var(--muted);line-height:1.35; }
+      .sticky-copy b { display:block;color:var(--ink);font-size:13px; }
+      .sticky-btn {
+        min-width:110px;height:44px;border:0;border-radius:999px;color:#fff8ef;
+        background:linear-gradient(135deg,var(--ink),#63322b);font-weight:900;cursor:pointer;
+      }
+
+      footer { padding: 0 16px 30px; }
+      .footer-card {
+        border-radius:30px;padding:22px;color:#fff8ef;background:#1e1513;overflow:hidden;position:relative;
+      }
+      .footer-card::before {
+        content:"";position:absolute;width:180px;height:180px;right:-60px;top:-70px;border-radius:50%;
+        background:radial-gradient(circle,rgba(231,181,82,.26),transparent 70%);
+      }
+      .footer-card h2 { position:relative;font-size:40px;margin-bottom:12px; }
+      .footer-card p { position:relative;color:rgba(255,248,239,.62);font-size:13px;line-height:1.85; }
+
+      .about-tags { position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:15px; }
+      .about-tags span { border-radius:999px;padding:9px 12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:800;color:rgba(255,248,239,.72); }
+
+      .tiny-bottom {
+        position:relative;margin-top:18px;padding-top:15px;border-top:1px solid rgba(255,255,255,.08);
+        display:flex;justify-content:space-between;gap:12px;
+        color:rgba(255,248,239,.38);font-family:"Space Mono",monospace;font-size:9px;letter-spacing:1.6px;text-transform:uppercase;
+      }
+
       .egg-overlay {
-        position: fixed; inset: 0; background: rgba(26,23,20,.75);
-        display: none; align-items: center; justify-content: center;
-        z-index: 999; backdrop-filter: blur(8px); padding: 24px;
+        position:fixed;inset:0;z-index:80;display:none;align-items:center;justify-content:center;
+        padding:20px;background:rgba(32,22,20,.72);backdrop-filter:blur(14px);
       }
-      .egg-overlay.show { display: flex; }
-      .egg-box { background: var(--paper); border-radius: 28px; padding: 40px 32px; max-width: 360px; width: 100%; text-align: center; }
-      .egg-box h3 { font-family: "Cormorant Garamond", serif; font-size: 36px; margin: 12px 0 8px; letter-spacing: -1px; }
-      .egg-box p { font-size: 14px; color: var(--muted); line-height: 1.9; margin-bottom: 22px; }
-      .egg-close { padding: 12px 28px; border-radius: 999px; background: var(--ink); color: #fff; border: none; font-family: "Syne", sans-serif; font-size: 13px; cursor: pointer; font-weight: 700; }
-
-      /* CONFETTI & STARS */
-      .confetti-piece {
-        position: fixed; pointer-events: none; z-index: 9998;
-        width: 8px; height: 8px; border-radius: 1px;
-        animation: confettiFall linear forwards;
+      .egg-overlay.show { display:flex; }
+      .egg-box {
+        width:min(100%,360px);border-radius:30px;padding:28px 22px;text-align:center;
+        background:#fff8ef;box-shadow:0 22px 60px rgba(0,0,0,.22);
       }
-      @keyframes confettiFall {
-        0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
-        100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+      .egg-box h3 { font-family:"Cormorant Garamond",serif;font-size:38px;line-height:1;margin:10px 0 8px; }
+      .egg-box p { color:var(--muted);font-size:13px;line-height:1.7;margin-bottom:16px; }
+      .egg-close { border:0;border-radius:999px;padding:13px 22px;color:#fff8ef;background:var(--ink);font-weight:900;cursor:pointer; }
+
+      .confetti-piece { position:fixed;pointer-events:none;z-index:100;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards; }
+      @keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(760deg);opacity:0;} }
+
+      .star { position:fixed;font-size:18px;pointer-events:none;z-index:100;animation:starFloat 1.1s ease-out forwards; }
+      @keyframes starFloat { 0%{transform:translateY(0) scale(.5);opacity:1;}100%{transform:translateY(-76px) scale(1.22);opacity:0;} }
+
+      @media (min-width: 520px) {
+        body { padding: 18px 0; }
+        .app { border-radius:38px;min-height:calc(100dvh - 36px);box-shadow:0 38px 90px rgba(32,22,20,.18),0 0 0 10px rgba(255,255,255,.22); }
+        .topbar { border-top-left-radius:38px;border-top-right-radius:38px; }
       }
-      .star {
-        position: fixed; pointer-events: none; z-index: 9997;
-        font-size: 16px; animation: starFloat 1.2s ease-out forwards;
-      }
-      @keyframes starFloat {
-        0% { transform: translateY(0) scale(.5); opacity: 1; }
-        100% { transform: translateY(-80px) scale(1.2); opacity: 0; }
-      }
-
-      /* ===== MOBILE RESPONSIVE ===== */
-      @media (max-width: 900px) {
-        nav { padding: 16px 20px; mix-blend-mode: normal; background: rgba(240,235,227,.92); backdrop-filter: blur(12px); }
-        .nav-links { gap: 16px; }
-        .nav-links a { font-size: 9px; }
-
-        .hero { grid-template-columns: 1fr; min-height: auto; }
-        .hero-left { min-height: 60vh; padding: 90px 24px 40px; }
-        .hero-h1 { font-size: clamp(52px, 14vw, 80px); letter-spacing: -2px; margin-bottom: 24px; }
-        .hero-tagline { font-size: 14px; }
-        .hero-badge { display: none; }
-        .hero-line { display: none; }
-
-        .hero-right { padding: 40px 24px 48px; gap: 22px; }
-        .vinyl-container { width: 170px; height: 170px; }
-        .vinyl-label { width: 62px; height: 62px; font-size: 16px; }
-        .vinyl-inner-ring { width: 78px; height: 78px; }
-        .vinyl-inner-ring2 { width: 126px; height: 126px; }
-
-        .mood-section { grid-template-columns: 1fr; padding: 64px 24px; gap: 28px; }
-        .mood-heading { font-size: clamp(40px, 12vw, 60px); }
-        .mood-card { border-radius: 20px; padding: 22px; }
-        .mood-emoji { width: 56px; height: 56px; font-size: 38px; }
-        .mood-title { font-size: 24px; }
-        .mood-text { font-size: 13px; }
-
-        .widgets { grid-template-columns: 1fr; padding: 0 24px 64px; gap: 16px; }
-        .w-card { border-radius: 18px; padding: 22px; }
-        .w-big { font-size: 18px; }
-
-        .ek-baat { margin: 0 24px 64px; padding: 36px 24px; grid-template-columns: 1fr; gap: 28px; border-radius: 24px; }
-        .ek-heading { font-size: clamp(38px, 11vw, 60px); }
-        .ek-q-card { border-radius: 16px; padding: 18px; }
-        .ek-q { font-size: 15px; }
-        .ek-btns { gap: 8px; }
-        .ek-btn { font-size: 12px; padding: 9px 18px; }
-
-        .reply-section { padding: 0 24px 64px; }
-        .reply-inner { grid-template-columns: 1fr; padding: 28px; gap: 24px; border-radius: 24px; }
-        .reply-heading { font-size: clamp(32px, 10vw, 48px); }
-        .send-btn { width: 100%; justify-content: center; padding: 16px; }
-        .send-row { justify-content: stretch; }
-
-        .about-footer { padding: 48px 24px 28px; border-top-left-radius: 24px; border-top-right-radius: 24px; }
-        .about-footer-inner { grid-template-columns: 1fr; gap: 28px; }
-        .about-right { justify-content: flex-start; }
-        .about-left h2 { font-size: clamp(38px, 11vw, 60px); margin-bottom: 16px; }
-        .about-footer-bottom { flex-direction: column; gap: 8px; margin-top: 36px; }
-      }
-
-      @media (max-width: 480px) {
-        .hero-h1 { font-size: clamp(46px, 16vw, 64px); letter-spacing: -1.5px; }
-        .hero-left { padding: 80px 20px 36px; }
-        .hero-right { padding: 32px 20px 40px; }
-        .mood-section { padding: 52px 20px; }
-        .widgets { padding: 0 20px 52px; }
-        .ek-baat { margin: 0 20px 52px; }
-        .reply-section { padding: 0 20px 52px; }
-        .about-footer { padding: 40px 20px 24px; }
-        nav { padding: 14px 18px; }
-        .vinyl-container { width: 150px; height: 150px; }
-        .vinyl-inner-ring { width: 68px; height: 68px; }
-        .vinyl-inner-ring2 { width: 112px; height: 112px; }
-        .pill { font-size: 11px; padding: 9px 16px; }
+      @media (prefers-reduced-motion: reduce) {
+        *,*::before,*::after { animation-duration:.001ms !important;animation-iteration-count:1 !important;scroll-behavior:auto !important; }
       }
     </style>
   </head>
+
   <body>
-    <div id="cur"></div>
-    <div id="cur2"></div>
+    <main class="app">
+      <div class="floating-orb orb-one"></div>
+      <div class="floating-orb orb-two"></div>
+      <div class="floating-orb orb-three"></div>
 
-    <nav>
-      <div class="nav-logo">K·</div>
-      <div class="nav-links">
-        <a href="#mood">mood</a>
-        <a href="#ek">baat</a>
-        <a href="#reply">reply</a>
-      </div>
-    </nav>
+      <div class="content">
+        <header class="topbar">
+          <div class="topbar-inner">
+            <div class="brand">
+              <div class="brand-mark">K</div>
+              <span>Khushi</span>
+            </div>
+            <nav class="nav-pills" aria-label="Page navigation">
+              <a href="#mood">Mood</a>
+              <a href="#ek">Baat</a>
+              <a href="#reply">Reply</a>
+            </nav>
+          </div>
+        </header>
 
-    <!-- MARQUEE -->
-    <div class="marquee-wrap">
-      <div class="marquee-inner">
-        <span>always leaned towards maithalani</span>
-        <span>mujhe aapse milne ka soubhagya mila</span>
-        <span>only for Khushi Jha</span>
-        <span>Khushi Jha — Jha ji</span>
-        <span>kya ham dost ban sakte hai</span>
-        <span>always leaned towards maithalani</span>
-        <span>mujhe aapse milne ka soubhagya mila</span>
-        <span>only for Khushi Jha</span>
-        <span>Khushi Jha — Jha ji</span>
-        <span>kya ham dost ban sakte hai</span>
-      </div>
-    </div>
-
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero-left">
-        <div class="hero-noise"></div>
-        <div class="hero-line"></div>
-        <div class="hero-eyebrow">// 001 — intro</div>
-        <h1 class="hero-h1">Hey,<br /><em>Khushi</em><br />Jha</h1>
-        <p class="hero-tagline">aspire to be your friend</p>
-        <div class="hero-badge" style="font-size:9px;line-height:1.5">THIS<br/>PAGE<br/>IS<br/>FOR<br/>YOU</div>
-      </div>
-      <div class="hero-right">
-        <div class="hero-right-bg"></div>
-        <audio id="song" preload="auto"></audio>
-
-        <div class="vinyl-container" id="vinylWrap">
-          <div class="vinyl-outer">
-            <div class="vinyl-shine"></div>
-            <div class="vinyl-inner-ring"></div>
-            <div class="vinyl-inner-ring2"></div>
-            <div class="vinyl-label">♪</div>
+        <div class="marquee-wrap" aria-label="Message marquee">
+          <div class="marquee-inner">
+            <span>always leaned towards maithalani</span>
+            <span>mujhe aapse milne ka soubhagya mila</span>
+            <span>Khushi Jha — Jha ji</span>
+            <span>kya ham dost ban sakte hai</span>
+            <span>always leaned towards maithalani</span>
+            <span>mujhe aapse milne ka soubhagya mila</span>
+            <span>Khushi Jha — Jha ji</span>
+            <span>kya ham dost ban sakte hai</span>
           </div>
         </div>
 
-        <div class="play-controls">
-          <button class="play-btn" id="playBtn" aria-label="Play">▶</button>
-          <div class="track-info">
-            Local song
-            <span id="timeDisp">0:00</span>
-          </div>
-        </div>
-        <div class="autoplay-hint" id="autoplayHint">▶ tap to play music</div>
-      </div>
-    </section>
+        <section class="hero" id="home">
+          <div class="hero-card">
+            <div class="hero-title">
+              <h1>Hey,<br /><em>Khushi</em><br />Jha</h1>
+              <p class="hero-copy">aspire to be your friend — respectfully, slowly, and honestly.</p>
+            </div>
 
-    <!-- MOOD -->
-    <section class="mood-section" id="mood">
-      <div>
-        <div class="s-label">01 — mood zone</div>
-        <h2 class="mood-heading">Aaj<br /><em>kaisi</em><br />ho?</h2>
-      </div>
-      <div>
-        <div class="mood-pills" id="moodPills">
-          <button class="pill active" data-k="chill">☁️ Chill</button>
-          <button class="pill" data-k="mast">✨ Mast</button>
-          <button class="pill" data-k="busy">📚 Busy</button>
-          <button class="pill" data-k="overthink">🌙 Overthinking</button>
-          <button class="pill" data-k="random">🎲 Random</button>
-        </div>
-        <div class="mood-card" id="moodCard">
-          <div class="mood-card-inner">
-            <div class="mood-emoji" id="mIcon">☁️</div>
-            <div>
-              <div class="mood-title" id="mTitle">Chill mode</div>
-              <div class="mood-text" id="mText">Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.</div>
+            <div class="hero-actions">
+              <div class="music-panel">
+                <div class="vinyl" id="vinyl" aria-hidden="true"></div>
+                <div class="track-info">
+                  <strong>Local song</strong>
+                  <span id="timeDisp">tap to play · 0:00</span>
+                </div>
+                <button class="play-btn" id="playBtn" type="button" aria-label="Play song">▶</button>
+              </div>
+
+              <div class="mini-stat-row">
+                <div class="mini-stat">
+                  <span>for whom</span>
+                  <b>Khushi Jha</b>
+                </div>
+                <div class="mini-stat">
+                  <span>vibe</span>
+                  <b>soft + honest</b>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
+          <audio id="song" preload="auto" src="./song.mp3"></audio>
+        </section>
 
-    <!-- WIDGETS -->
-    <div class="widgets">
-      <div class="w-card">
-        <div class="w-top">
-          <div class="w-tag">ek gaana</div>
-          <button class="w-ico" id="shuffleSong" title="Shuffle">↻</button>
-        </div>
-        <div class="w-big" id="songTitle">Sooraj Dooba hai yaaro</div>
-        <div class="w-small" id="songDesc">Soft mood ke liye. Headphones lagao aur thoda slow ho jao.</div>
-      </div>
-
-      <div class="w-card accent-g">
-        <div class="w-top">
-          <div class="w-tag">aapka gaana</div>
-          <button class="w-ico" id="saveSongSuggestion" title="Save">✓</button>
-        </div>
-        <div class="w-big">Aapka favourite song?</div>
-        <div class="w-small">Ek gaana suggest kar do, main bhi sununga.</div>
-        <input class="mini-input light" id="songSuggestion" type="text" placeholder="Song name ya artist..." autocomplete="off" />
-        <div class="capture-hint" id="songSuggestionMsg">Suggestion bhi response ke saath capture hoga.</div>
-      </div>
-    </div>
-
-    <!-- EK BAAT -->
-    <div class="ek-baat" id="ek">
-      <div class="ek-deco"></div>
-      <div class="ek-deco2"></div>
-      <div>
-        <div class="s-label" style="color:rgba(255,255,255,.3)">02 — ek sawal</div>
-        <h2 class="ek-heading">Ek<br /><em>respectful</em><br />sawal</h2>
-        <p class="ek-sub">Bas honestly pooch raha hoon. Jo bhi jawab ho, woh mere liye important hoga.</p>
-      </div>
-      <div class="ek-right">
-        <div class="ek-q-card">
-          <div class="ek-q" id="ekQ">Kya main aapka dost banne ke laayak hoon?</div>
-          <div class="ek-btns" id="ekBtns"></div>
-          <textarea class="ek-free-response" id="ekFreeText" placeholder="Agar kuch aur kehna ho toh yahan likh sakti ho..."></textarea>
-          <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:10px">
-            <button class="mini-save-btn" id="saveEkText">Save response</button>
+        <!-- MOOD -->
+        <section class="section" id="mood">
+          <div class="section-head">
+            <div>
+              <h2>Aap<br /><em>kaisi</em> hain ?</h2>
+            </div>
           </div>
-          <div class="ek-res" id="ekResult"></div>
-          <div class="ek-progress" id="ekProgress">Question 1 of 3</div>
-          <div class="ek-summary" id="ekSummary"></div>
-        </div>
-      </div>
-    </div>
 
-    <!-- REPLY -->
-    <section class="reply-section" id="reply">
-      <div class="reply-inner">
-        <div>
-          <div class="s-label">03 — reply zone</div>
-          <h2 class="reply-heading">Ek<br /><em>reply</em><br />dogi?</h2>
-          <p class="reply-sub">Kuch bhi. Ek line, ek gaana, ya bas "nice".</p>
-        </div>
-        <div>
-          <div class="chips" id="chips">
-            <button class="chip active" data-v="Chill">😌 Chill</button>
-            <button class="chip" data-v="Happy">😊 Happy</button>
-            <button class="chip" data-v="Busy">📚 Busy</button>
-            <button class="chip" data-v="Sleepy">🌙 Sleepy</button>
-            <button class="chip" data-v="Random">🎲 Random</button>
+          <div class="glass-card pad">
+            <div class="pill-grid" id="moodPills">
+              <button class="pill active" type="button" data-k="chill">☁️ Chill</button>
+              <button class="pill" type="button" data-k="mast">✨ Mast</button>
+              <button class="pill" type="button" data-k="busy">📚 Busy</button>
+              <button class="pill" type="button" data-k="overthink">🌙 Overthinking</button>
+              <button class="pill" type="button" data-k="random">🎲 Random</button>
+            </div>
+
+            <div class="mood-display">
+              <div class="mood-emoji" id="mIcon">☁️</div>
+              <div>
+                <div class="mood-title" id="mTitle">Chill mode</div>
+                <div class="mood-text" id="mText">Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.</div>
+              </div>
+            </div>
           </div>
-          <textarea id="replyText" placeholder="Yahan kuch bhi likh sakti ho..."></textarea>
-          <div class="send-row">
-            <button class="send-btn" id="sendBtn">Bhejo ✦</button>
+        </section>
+
+        <!-- SONG -->
+        <section class="section" id="song-section">
+          <div class="section-head">
+            <div>
+              <h2>Ek<br /><em>gaana</em></h2>
+            </div>
           </div>
-          <div class="reply-msg" id="replyMsg"></div>
-        </div>
-      </div>
-    </section>
 
-    <!-- FOOTER -->
-    <footer class="about-footer">
-      <div class="footer-glow"></div>
-      <div class="about-footer-inner">
-        <div class="about-left">
-          <span class="about-label">About me</span>
-          <h2>Aman Choudhary</h2>
-          <p>I am Aman Choudhary, from Kusheshwar Asthan, Darbhanga. I belong to a Hindu Brahman family and I am currently pursuing B.Tech from IIT Bhubaneswar. I have just completed my 2nd year and I am 20 years old.</p>
-        </div>
-        <div class="about-right">
-          <div class="about-chip">IIT Bhubaneswar</div>
-          <div class="about-chip">Emotionally Sensitive</div>
-          <div class="about-chip">Long Bike Rides</div>
-          <div class="about-chip">Singing</div>
-          <div class="about-chip">Loving</div>
-        </div>
-      </div>
-      <div class="about-footer-bottom">
-        <span>Built with honesty and care.</span>
-        <span>A · C</span>
-      </div>
-    </footer>
+          <div class="glass-card pad song-card">
+            <div class="song-top">
+              <div>
+                <div class="song-title" id="songTitle">Sooraj Dooba Hai Yaaro</div>
+                <div id="songDesc" style="font-size:13px;color:var(--muted);margin-top:4px;line-height:1.5;">Soft mood ke liye. Headphones lagao aur thoda slow ho jao.</div>
+              </div>
+              <button class="icon-btn" type="button" id="shuffleSong" aria-label="Shuffle song">↻</button>
+            </div>
 
-    <!-- SECRET EGG -->
+            <div class="field">
+              <label for="songSuggestion" style="font-size:12px;font-weight:900;letter-spacing:-.1px;color:rgba(32,22,20,.78);">Aapka favourite song <span style="color:var(--muted);font-weight:600;">(optional)</span></label>
+              <input id="songSuggestion" type="text" placeholder="Song name ya artist..." autocomplete="off" />
+            </div>
+          </div>
+        </section>
+
+        <!-- QUESTIONS -->
+        <section class="section" id="ek">
+          <div class="section-head">
+            <div>
+              <h2>Aapke<br /><em>Vichaar</em></h2>
+            </div>
+          </div>
+
+          <div class="glass-card pad question-card">
+            <div class="q-status">
+              <span class="q-count" id="ekProgress">Question 1 of 3</span>
+              <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
+            </div>
+
+            <div class="question-text" id="ekQ">Kya main aapka dost banne ke laayak hoon?</div>
+            <div class="option-grid" id="ekBtns"></div>
+            <div class="response-box" id="ekResult"></div>
+
+            <div class="field">
+              <label for="ekFreeText" style="font-size:12px;font-weight:900;">Honest note <span style="color:var(--muted);font-weight:600;">(optional)</span></label>
+              <textarea id="ekFreeText" placeholder="Agar kuch aur kehna ho toh yahan likh sakti ho..."></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- REPLY -->
+        <section class="section" id="reply">
+          <div class="section-head">
+            <div>
+              <h2>Apne <em> Baare </em> me </h2>
+            </div>
+          </div>
+
+          <div class="glass-card pad">
+            <div class="field" style="margin-top:0;">
+              <textarea id="replyText" placeholder="Kuch bhi. Jo aapke man mein ho..." style="min-height:140px;"></textarea>
+            </div>
+          </div>
+        </section>
+
+        <!-- SUBMIT -->
+        <section class="submit-section" id="send">
+          <div class="submit-card">
+            <button class="submit-btn" id="sendBtn" type="button">💌 Bhejo</button>
+            <div class="status-msg" id="replyMsg"></div>
+          </div>
+        </section>
+
+        <footer>
+          <div class="footer-card">
+            <div class="label" style="color:#e7b552">About me</div>
+            <h2>Aman Choudhary</h2>
+            <p>I am Aman Choudhary, from Kusheshwar Asthan, Darbhanga. I belong to a Hindu Brahman family and I am currently pursuing B.Tech from IIT Bhubaneswar. I have just completed my 2nd year</p>
+        
+            <div class="about-tags">
+              <span>IIT Bhubaneswar</span>
+              <span>Emotionally Sensitive</span>
+              <span>Long Bike Rides</span>
+              <span>Singing</span>
+              <span>Loving</span>
+            </div>
+            <div class="tiny-bottom">
+              <span>Built with honesty and care.</span>
+              <span>A · C</span>
+            </div>
+          </div>
+        </footer>
+      </div>
+
+      <!-- STICKY BAR -->
+      <div class="sticky-submit">
+        <div class="sticky-inner">
+          <div class="sticky-copy">
+            <b id="stickyTitle">Complete all fields</b>
+            <span id="stickySub">Kam se kam ek sawal ka jawab do.</span>
+          </div>
+          <button class="sticky-btn" id="stickyBtn" type="button">Send ✦</button>
+        </div>
+      </div>
+    </main>
+
     <div class="egg-overlay" id="eggOverlay">
       <div class="egg-box">
         <div style="font-size:44px">🎁</div>
         <h3>Secret mil gaya</h3>
-        <p>Agar tum yahan tak aa gayi ho, toh bas itna samjho ki yeh page casually nahi banaya gaya tha. 🙂</p>
-        <button class="egg-close" onclick="document.getElementById('eggOverlay').classList.remove('show')">Close ✦</button>
+        <p>Main aapka hamesa aabhari rahunga 🙂</p>
+        <button class="egg-close" type="button" onclick="document.getElementById('eggOverlay').classList.remove('show')">Close ✦</button>
       </div>
     </div>
 
     <script>
-    /* ===================== CURSOR ===================== */
-    const cur = document.getElementById('cur'), cur2 = document.getElementById('cur2');
-    let mx=0,my=0,cx=0,cy=0;
-    document.addEventListener('mousemove', e => {
-      mx=e.clientX; my=e.clientY;
-      cur.style.left=mx+'px'; cur.style.top=my+'px';
-    });
-    (function animCur(){
-      cx+=(mx-cx)*.12; cy+=(my-cy)*.12;
-      cur2.style.left=cx+'px'; cur2.style.top=cy+'px';
-      requestAnimationFrame(animCur);
-    })();
+      // ── CONFIG ── Replace with your actual Formspree ID and YOUR email ──
+      const FORM_ENDPOINT = 'https://formspree.io/f/mnjrbqgy';
+      const YOUR_EMAIL    = 'amansachi2005@gmail.com'; // ← your email for mailto fallback
+      const STORAGE_KEY   = 'khushiBundledResponseV3';
 
-    /* ===================== STATE & FORMSPREE ===================== */
-    const FORM_ENDPOINT = 'https://formspree.io/f/xnjrzker';
-
-    // Load persisted state
-    let saved_state = {};
-    try { saved_state = JSON.parse(localStorage.getItem('khushiFullResponse') || '{}'); } catch(e){}
-
-    const state = Object.assign({
-      page: 'Khushi ke liye',
-      openedAt: new Date().toISOString(),
-      moodZone: 'chill',
-      songSuggestion: '',
-      ekBaat: [],
-      ekFreeText: '',
-      replyMood: 'Chill',
-      replyText: '',
-    }, saved_state);
-
-    function persist() {
-      try { localStorage.setItem('khushiFullResponse', JSON.stringify(state)); } catch(e){}
-    }
-
-    // Optimised send: debounce + dedupe + keepalive
-    let sendTimer = null;
-    let sending = false;
-    let pendingPayload = null;
-
-    function debouncedSend(eventName, extra={}) {
-      const now = new Date();
-      pendingPayload = buildPayload(eventName, now, extra);
-      clearTimeout(sendTimer);
-      sendTimer = setTimeout(flushSend, 1500); // wait 1.5s before actually sending
-    }
-
-    function buildPayload(eventName, now, extra={}) {
-      return {
-        _subject: '💬 Khushi ka response',
-        Event: eventName,
-        'Submitted At': fmtDate(now),
-        Page: state.page,
-        'Opened At': fmtDate(state.openedAt),
-        'Mood Zone': state.moodZone || '(not selected)',
-        'Song Suggestion': state.songSuggestion || '(not given)',
-        'Reply Mood': state.replyMood || '(not selected)',
-        'Reply Text': state.replyText || '(blank)',
-        'Ek Free Text': state.ekFreeText || '(not given)',
-        'Ek Baat Answers': formatEkAnswers(),
-        ...extra
+      // ── DATA ──
+      const moods = {
+        chill:     { icon:'☁️',  title:'Chill mode',        text:'Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.' },
+        mast:      { icon:'✨',  title:'Mast mood',          text:'Aaj wali vibe bright hai. Music, fun, aur thodi si hasi banti hai.' },
+        busy:      { icon:'📚', title:'Busy but okay',      text:'Pressure se zyada important tum ho. Ek kaam ek time — wahi kaafi hai.' },
+        overthink: { icon:'🌙', title:'Overthinking alert', text:'Sab answers abhi milna zaroori nahi. Mind ko bas thoda rest chahiye.' },
+        random:    { icon:'🎲', title:'Random vibe',         text:'Koi fixed mood nahi? Perfect. Random bhi ek mood hota hai.' }
       };
-    }
 
-    async function flushSend() {
-      if (!pendingPayload || sending) return;
-      sending = true;
-      const payload = pendingPayload;
-      try {
-        await fetch(FORM_ENDPOINT, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(payload),
-          keepalive: true
-        });
-      } catch(e) {} finally {
-        sending = false;
-        pendingPayload = null;
+      const songs = [
+        { t:'Arz kiya hai', d:'Soft mood ke liye. Headphones lagao aur thoda slow ho jao.' },
+        { t:'Iktara',                  d:'Soft, calm, aur thoda sa khidki ke paas baithne wala mood.' },
+        { t:'Arz kiya hai',                  d:'Late evening type feel ke liye.' },
+        { t:'Jo tum mere ho',                   d:'Calm vibe aur light sa smile.' },
+        { t:'Kho Gaye Hum Kahan',      d:'Akele, light, thoda dreamy mood.' },
+        { t:'Ilahi',                   d:'Agar energy thodi upar chahiye.' },
+        { t:'Tum Se Hi',               d:'Ek bahut pure wali vibe.' }
+      ];
+
+      const qs = [
+        { q:'Kya main aapka dost banne ke laayak hoon?', opts:[
+          { t:'Haan, bilkul 🙂', r:'Thank you, yeh mere liye kaafi special hai.' },
+          { t:'Pehle aur baat karte hain', r:'Bilkul, slow aur respectfully hi sahi.' },
+          { t:'Sochungi', r:'Fair enough. Aapka honest answer important hai.' }
+        ]},
+        { q:'Kya aap mujhe ek mauka dena chahengi?', opts:[
+          { t:'Haan, ek chance', r:'Main is chance ko respectfully value karunga.' },
+          { t:'Dheere dheere', r:'Perfect. Dosti mein comfort sabse important hai.' },
+          { t:'Abhi sure nahi', r:'No pressure. Aapka comfort first.' }
+        ]},
+        { q:'Aapko mujhse baat karna comfortable lagta hai?', opts:[
+          { t:'Haan', r:'Yeh jaan kar genuinely achha laga.' },
+          { t:'Thoda time chahiye', r:'Bilkul, jitna time chahiye utna.' },
+          { t:'Kabhi kabhi', r:'Understood. Main boundaries respect karunga.' }
+        ]}
+      ];
+
+      // ── STATE ──
+      let saved = {};
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+
+      const state = Object.assign({
+        openedAt: new Date().toISOString(),
+        moodZone: 'chill',
+        shownSong: 'Sooraj Dooba Hai Yaaro',
+        songSuggestion: '',
+        ekBaat: [],
+        ekFreeText: '',
+        replyText: ''
+      }, saved);
+
+      let qi = Math.min(state.ekBaat.length, qs.length - 1);
+
+      // ── ELEMENTS ──
+      const audio     = document.getElementById('song');
+      const playBtn   = document.getElementById('playBtn');
+      const vinyl     = document.getElementById('vinyl');
+      const timeDisp  = document.getElementById('timeDisp');
+      const moodPills = document.querySelectorAll('#moodPills .pill');
+      const songSugg  = document.getElementById('songSuggestion');
+      const ekFreeText= document.getElementById('ekFreeText');
+      const replyText = document.getElementById('replyText');
+      const sendBtn   = document.getElementById('sendBtn');
+      const mailtoBtn = document.getElementById('mailtoBtn');
+      const stickyBtn = document.getElementById('stickyBtn');
+      const replyMsg  = document.getElementById('replyMsg');
+
+      function persist() {
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+        updateSticky();
       }
-    }
 
-    // Immediate send (for important events like final submit)
-    async function sendNow(eventName, extra={}) {
-      clearTimeout(sendTimer);
-      const payload = buildPayload(eventName, new Date(), extra);
-      try {
+      // ── AUDIO ──
+      function fmtTime(s) {
+        if (!isFinite(s)) return '0:00';
+        return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2,'0')}`;
+      }
+
+      async function toggleAudio() {
+        if (audio.paused) {
+          try {
+            await audio.play();
+            playBtn.textContent = '❚❚';
+            vinyl.classList.add('playing');
+          } catch(e) {
+            timeDisp.textContent = 'tap again to play';
+          }
+        } else {
+          audio.pause();
+          playBtn.textContent = '▶';
+          vinyl.classList.remove('playing');
+        }
+      }
+
+      playBtn.addEventListener('click', toggleAudio);
+      vinyl.addEventListener('click', toggleAudio);
+      audio.addEventListener('timeupdate', () => {
+        timeDisp.textContent = audio.paused
+          ? `tap to play · ${fmtTime(audio.currentTime)}`
+          : `playing · ${fmtTime(audio.currentTime)}`;
+      });
+      audio.addEventListener('ended', () => {
+        playBtn.textContent = '▶';
+        vinyl.classList.remove('playing');
+        audio.currentTime = 0;
+        timeDisp.textContent = 'tap to play · 0:00';
+      });
+
+      // ── MOOD ──
+      function setMood(k) {
+        const m = moods[k]; if (!m) return;
+        state.moodZone = k;
+        document.getElementById('mIcon').textContent  = m.icon;
+        document.getElementById('mTitle').textContent = m.title;
+        document.getElementById('mText').textContent  = m.text;
+        moodPills.forEach(b => b.classList.toggle('active', b.dataset.k === k));
+        persist();
+      }
+      moodPills.forEach(b => b.addEventListener('click', () => { setMood(b.dataset.k); spawnStars(b); }));
+
+      // ── SONG ──
+      document.getElementById('shuffleSong').addEventListener('click', () => {
+        const s = songs[Math.floor(Math.random() * songs.length)];
+        state.shownSong = s.t;
+        document.getElementById('songTitle').textContent = s.t;
+        document.getElementById('songDesc').textContent  = s.d;
+        persist();
+        spawnStars(document.getElementById('shuffleSong'));
+      });
+
+      songSugg.value = state.songSuggestion || '';
+      songSugg.addEventListener('input', () => { state.songSuggestion = songSugg.value.trim(); persist(); });
+
+      // ── QUESTIONS ──
+      function renderEkQ() {
+        const d = qs[qi];
+        const answered = Math.min(state.ekBaat.length, qs.length);
+        document.getElementById('ekQ').textContent = d.q;
+        document.getElementById('ekProgress').textContent = answered >= qs.length
+          ? 'Saare sawal ho gaye ✦'
+          : `Question ${qi + 1} of ${qs.length}`;
+        document.getElementById('progressBar').style.width = `${(answered / qs.length) * 100}%`;
+
+        const existing = state.ekBaat.find(x => x.question === d.q);
+        const ekBtns = document.getElementById('ekBtns');
+        ekBtns.innerHTML = '';
+        d.opts.forEach(opt => {
+          const b = document.createElement('button');
+          b.type = 'button';
+          b.className = 'option-btn' + (existing && existing.answer === opt.t ? ' selected' : '');
+          b.textContent = opt.t;
+          b.addEventListener('click', () => handleEkAnswer(d.q, opt, b));
+          ekBtns.appendChild(b);
+        });
+
+        const ekResult = document.getElementById('ekResult');
+        if (existing) { ekResult.textContent = existing.messageShown; ekResult.style.display = 'block'; }
+        else ekResult.style.display = 'none';
+      }
+
+      function handleEkAnswer(question, opt, btn) {
+        const entry = { question, answer: opt.t, messageShown: opt.r, time: new Date().toISOString() };
+        const idx = state.ekBaat.findIndex(x => x.question === question);
+        if (idx >= 0) state.ekBaat[idx] = entry; else state.ekBaat.push(entry);
+
+        document.querySelectorAll('#ekBtns .option-btn').forEach(x => x.classList.remove('selected'));
+        btn.classList.add('selected');
+        document.getElementById('ekResult').textContent = opt.r;
+        document.getElementById('ekResult').style.display = 'block';
+
+        persist();
+        spawnConfetti(18);
+
+        if (state.ekBaat.length < qs.length) {
+          setTimeout(() => { qi = Math.min(state.ekBaat.length, qs.length - 1); renderEkQ(); }, 650);
+        } else {
+          setTimeout(() => {
+            document.getElementById('ekProgress').textContent = 'Saare sawal ho gaye ✦';
+            document.getElementById('progressBar').style.width = '100%';
+          }, 350);
+        }
+      }
+
+      ekFreeText.value = state.ekFreeText || '';
+      ekFreeText.addEventListener('input', () => { state.ekFreeText = ekFreeText.value.trim(); persist(); });
+
+      replyText.value = state.replyText || '';
+      replyText.addEventListener('input', () => { state.replyText = replyText.value.trim(); persist(); });
+
+      // ── VALIDATION — only 2 required: ≥1 question + final reply ──
+      function getMissing() {
+        const missing = [];
+        if (state.ekBaat.length === 0) missing.push('Kam se kam ek sawal ka jawab do.');
+        if (!state.replyText)          missing.push('Apna jawab likho (reply section).');
+        return missing;
+      }
+
+      function updateSticky() {
+        const missing = getMissing();
+        const title = document.getElementById('stickyTitle');
+        const sub   = document.getElementById('stickySub');
+        if (missing.length === 0) {
+          title.textContent = 'Taiyaar hai 💌';
+          sub.textContent   = 'Ek click mein bhej do.';
+        } else {
+          title.textContent = `${missing.length} cheez baaki`;
+          sub.textContent   = missing[0];
+        }
+      }
+
+      // ── BUILD CONTENT ──
+      function buildText() {
+        const mood = moods[state.moodZone]?.title || state.moodZone;
+        const time = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+
+        const answers = qs.map((item, i) => {
+          const found = state.ekBaat.find(x => x.question === item.q);
+          return `Q${i+1}. ${item.q}\nAnswer: ${found ? found.answer : '(not answered)'}`;
+        }).join('\n\n');
+
+        return `Khushi ka Response — ${time}
+
+MOOD: ${mood}
+
+SONG SHOWN: ${state.shownSong}
+FAVOURITE SONG: ${state.songSuggestion || '(not filled)'}
+
+SAWAL KE JAWAB:
+${answers}
+
+HONEST NOTE:
+${state.ekFreeText || '(not filled)'}
+
+FINAL REPLY:
+${state.replyText}
+`;
+      }
+
+      // ── FORMSPREE SEND ──
+      async function sendViaFormspree() {
+        const payload = {
+          _subject: '💌 Khushi ka response — ' + new Date().toLocaleString('en-IN'),
+          Mood: moods[state.moodZone]?.title || state.moodZone,
+          'Song Shown': state.shownSong,
+          'Favourite Song': state.songSuggestion || '(not filled)',
+          'Question Answers': qs.map((item, i) => {
+            const found = state.ekBaat.find(x => x.question === item.q);
+            return `Q${i+1}: ${item.q}\nA: ${found ? found.answer : '(not answered)'}`;
+          }).join('\n\n'),
+          'Honest Note': state.ekFreeText || '(not filled)',
+          'Final Reply': state.replyText,
+          'Submitted At': new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
+          message: buildText()
+        };
+
         const res = await fetch(FORM_ENDPOINT, {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-          body: JSON.stringify(payload),
-          keepalive: true
+          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+          body: JSON.stringify(payload)
         });
-        return res.ok;
-      } catch(e) { return false; }
-    }
 
-    function fmtDate(v) {
-      if (!v) return '(na)';
-      const d = new Date(v);
-      return isNaN(d) ? String(v) : d.toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' });
-    }
-    function formatEkAnswers() {
-      if (!state.ekBaat.length) return '(not answered)';
-      return state.ekBaat.map((x,i)=>`Q${i+1}. ${x.question}\nA: ${x.answer}\nMsg: ${x.messageShown}`).join('\n\n');
-    }
-
-    /* ===================== MOODS ===================== */
-    const moods = {
-      chill: { icon:'☁️', title:'Chill mode', text:'Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.' },
-      mast: { icon:'✨', title:'Mast mood', text:'Aaj wali vibe bright hai. Music, fun, aur thodi si hasi banti hai.' },
-      busy: { icon:'📚', title:'Busy but okay', text:'Pressure se zyada important tum ho. Ek kaam ek time — wahi kaafi hai.' },
-      overthink: { icon:'🌙', title:'Overthinking alert', text:'Sab answers abhi milna zaroori nahi. Mind ko bas thoda rest chahiye.' },
-      random: { icon:'🎲', title:'Random vibe', text:'Koi fixed mood nahi? Perfect. Random bhi ek mood hota hai.' }
-    };
-
-    function setMood(k) {
-      const m = moods[k]; if(!m) return;
-      document.getElementById('mIcon').textContent = m.icon;
-      document.getElementById('mTitle').textContent = m.title;
-      document.getElementById('mText').textContent = m.text;
-      document.querySelectorAll('#moodPills .pill').forEach(b=>b.classList.toggle('active', b.dataset.k===k));
-      state.moodZone = k; persist();
-      debouncedSend('mood_selected', { moodKey: k });
-    }
-
-    document.querySelectorAll('#moodPills .pill').forEach(btn => {
-      btn.onclick = () => { spawnStars(btn); setMood(btn.dataset.k); };
-    });
-    setMood(state.moodZone || 'chill');
-
-    /* ===================== SONGS ===================== */
-    const songs = [
-      { t:'Iktara', d:'Soft mood ke liye. Headphones lagao aur thoda slow ho jao.' },
-      { t:'Kasoor', d:'Late evening type feel ke liye.' },
-      { t:'Shaam', d:'Calm vibe aur khidki ke paas baithne wala mood.' },
-      { t:'Kho Gaye Hum Kahan', d:'Akele, light, thoda dreamy mood.' },
-      { t:'Ilahi', d:'Agar energy thodi upar chahiye.' },
-      { t:'Tum Se Hi', d:'Ek bahut pure wali vibe.' },
-    ];
-    document.getElementById('shuffleSong').onclick = () => {
-      const s = songs[Math.floor(Math.random()*songs.length)];
-      document.getElementById('songTitle').textContent = s.t;
-      document.getElementById('songDesc').textContent = s.d;
-      debouncedSend('song_shuffled', { shownSong: s.t });
-    };
-
-    const songInput = document.getElementById('songSuggestion');
-    const songMsg = document.getElementById('songSuggestionMsg');
-    songInput.addEventListener('input', () => { state.songSuggestion = songInput.value.trim(); persist(); });
-    document.getElementById('saveSongSuggestion').onclick = async () => {
-      state.songSuggestion = songInput.value.trim(); persist();
-      const ok = await sendNow('song_suggestion_saved', { songSuggestion: state.songSuggestion||'(empty)' });
-      songMsg.textContent = ok ? '✓ save ho gaya' : 'local save ho gaya';
-    };
-
-    /* ===================== VINYL / AUDIO ===================== */
-    const audio = document.getElementById('song');
-    const vinyl = document.getElementById('vinylWrap');
-    const playBtn = document.getElementById('playBtn');
-    const timeDisp = document.getElementById('timeDisp');
-    const autoplayHint = document.getElementById('autoplayHint');
-    const srcs = ['./song.mp3','./song','./song.wav','./song.ogg'];
-    let si = 0;
-    audio.src = srcs[si]; audio.load();
-
-    function fmt(s) {
-      if (!isFinite(s)) return '0:00';
-      return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
-    }
-    function setUI(playing) {
-      playBtn.textContent = playing ? '❚❚' : '▶';
-      vinyl.classList.toggle('playing', playing);
-      autoplayHint.style.display = playing ? 'none' : 'block';
-    }
-    async function toggle() {
-      if (audio.paused) {
-        try { await audio.play(); setUI(true); } catch(e) {}
-      } else {
-        audio.pause(); setUI(false);
-      }
-    }
-    playBtn.onclick = toggle;
-    vinyl.onclick = toggle;
-    audio.ontimeupdate = () => { timeDisp.textContent = fmt(audio.currentTime); };
-    audio.onended = () => { setUI(false); timeDisp.textContent = '0:00'; };
-    audio.onerror = () => {
-      if (si < srcs.length-1) { si++; audio.src = srcs[si]; audio.load(); }
-    };
-
-    // Autoplay: try immediately, then on first user interaction
-    function attemptAutoplay() {
-      audio.play().then(() => { setUI(true); }).catch(() => {
-        // Browser blocked — wait for first touch/click
-        const handler = async () => {
-          try { await audio.play(); setUI(true); } catch(e) {}
-          document.removeEventListener('click', handler);
-          document.removeEventListener('touchstart', handler);
-        };
-        document.addEventListener('click', handler, { once: true });
-        document.addEventListener('touchstart', handler, { once: true, passive: true });
-      });
-    }
-    // Attempt after short delay to let page settle
-    setTimeout(attemptAutoplay, 600);
-
-    /* ===================== EK BAAT ===================== */
-    const qs = [
-      { q:'Kya main aapka dost banne ke laayak hoon?', opts:[
-        { t:'Haan, bilkul 🙂', r:'Thank you, yeh mere liye kaafi special hai.' },
-        { t:'Pehle aur baat karte hain', r:'Bilkul, slow aur respectfully hi sahi.' },
-        { t:'Sochungi', r:'Fair enough. Aapka honest answer important hai.' },
-      ]},
-      { q:'Kya aap mujhe ek mauka dena chahengi?', opts:[
-        { t:'Haan, ek chance', r:'Main is chance ko respectfully value karunga.' },
-        { t:'Dheere dheere', r:'Perfect. Dosti mein comfort sabse important hai.' },
-        { t:'Abhi sure nahi', r:'No pressure. Aapka comfort first.' },
-      ]},
-      { q:'Aapko mujhse baat karna comfortable lagta hai?', opts:[
-        { t:'Haan', r:'Yeh jaan kar genuinely achha laga.' },
-        { t:'Thoda time chahiye', r:'Bilkul, jitna time chahiye utna.' },
-        { t:'Kabhi kabhi', r:'Understood. Main boundaries respect karunga.' },
-      ]},
-    ];
-    let qi = 0;
-    const ekQ=document.getElementById('ekQ'), ekBtns=document.getElementById('ekBtns');
-    const ekResult=document.getElementById('ekResult'), ekProgress=document.getElementById('ekProgress');
-    const ekSummary=document.getElementById('ekSummary'), ekFreeText=document.getElementById('ekFreeText');
-
-    function renderEkQ() {
-      const d = qs[qi];
-      ekQ.textContent = d.q;
-      ekBtns.innerHTML = '';
-      ekResult.style.display='none';
-      ekProgress.textContent = `Question ${qi+1} of ${qs.length}`;
-      d.opts.forEach((opt,idx) => {
-        const b = document.createElement('button');
-        b.className = 'ek-btn yes-btn';
-        b.textContent = opt.t;
-        if (idx > 0) { b.style.background='rgba(255,255,255,.1)'; b.style.color='#fff'; }
-        b.onclick = () => handleEkAnswer(d.q, opt);
-        ekBtns.appendChild(b);
-      });
-    }
-
-    async function handleEkAnswer(question, opt) {
-      const entry = { question, answer: opt.t, messageShown: opt.r, time: new Date().toISOString() };
-      const idx = state.ekBaat.findIndex(x=>x.question===question);
-      if (idx>=0) state.ekBaat[idx]=entry; else state.ekBaat.push(entry);
-      persist();
-      ekResult.textContent = opt.r; ekResult.style.display='block';
-      spawnConfetti();
-      debouncedSend('ek_baat_answered', { question, answer: opt.t });
-
-      setTimeout(() => {
-        if (qi < qs.length-1) { qi++; renderEkQ(); }
-        else {
-          ekProgress.textContent = 'All questions answered ✦';
-          ekSummary.style.display = 'block';
-          ekSummary.innerHTML = '<strong>Captured:</strong><br>' +
-            state.ekBaat.map((x,i)=>`${i+1}. ${x.question}<br>→ ${x.answer}`).join('<br>');
-          sendNow('ek_baat_completed', { totalAnswers: state.ekBaat.length });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          throw new Error(err.error || `HTTP ${res.status}`);
         }
-      }, 1100);
-    }
-
-    ekFreeText.addEventListener('input', () => { state.ekFreeText = ekFreeText.value.trim(); persist(); });
-    document.getElementById('saveEkText').onclick = async () => {
-      state.ekFreeText = ekFreeText.value.trim(); persist();
-      const ok = await sendNow('ek_free_text_saved', { ekFreeText: state.ekFreeText||'(empty)' });
-      ekResult.textContent = ok ? '✓ response save ho gaya' : 'local save ho gaya'; ekResult.style.display='block';
-    };
-    renderEkQ();
-
-    /* ===================== REPLY ===================== */
-    let replyMood = state.replyMood || 'Chill';
-    document.querySelectorAll('#chips .chip').forEach(c => {
-      c.classList.toggle('active', c.dataset.v===replyMood);
-      c.onclick = () => {
-        document.querySelectorAll('#chips .chip').forEach(x=>x.classList.remove('active'));
-        c.classList.add('active'); replyMood = c.dataset.v;
-        state.replyMood = replyMood; persist();
-        debouncedSend('reply_mood_selected', { replyMood });
-      };
-    });
-
-    const replyTextEl = document.getElementById('replyText');
-    if (state.replyText) replyTextEl.value = state.replyText;
-    replyTextEl.addEventListener('input', () => { state.replyText = replyTextEl.value.trim(); persist(); });
-
-    document.getElementById('sendBtn').onclick = async () => {
-      const text = replyTextEl.value.trim();
-      const btn = document.getElementById('sendBtn');
-      const msg = document.getElementById('replyMsg');
-      btn.disabled = true; btn.textContent = 'Bhej raha hoon...'; msg.style.display='none';
-      state.replyText = text; persist();
-
-      const ok = await sendNow('final_reply_submitted', {
-        'Final Reply': text || '(blank)',
-        'Final Mood Tag': replyMood,
-        'All Data': 'mood, song suggestion, ek baat, free text, reply all included'
-      });
-
-      if (ok) {
-        replyTextEl.value = ''; state.replyText = ''; persist();
-        msg.textContent = '✓ chala gaya — response capture ho gaya';
-        msg.className = 'reply-msg ok'; spawnConfetti();
-      } else {
-        msg.textContent = 'Network issue. Response browser mein safe hai.';
-        msg.className = 'reply-msg err';
+        return true;
       }
-      msg.style.display='block';
-      btn.disabled=false; btn.textContent='Bhejo ✦';
-    };
 
-    /* ===================== CONFETTI ===================== */
-    function spawnConfetti() {
-      const colors = ['#d45c3a','#c8973e','#5e7a60','#8b7aad','#f0ebe3','#1a1714'];
-      for (let i=0; i<50; i++) {
-        const el = document.createElement('div');
-        el.className='confetti-piece';
-        el.style.left=Math.random()*100+'vw'; el.style.top='-10px';
-        el.style.background=colors[Math.floor(Math.random()*colors.length)];
-        el.style.width=6+Math.random()*8+'px'; el.style.height=6+Math.random()*8+'px';
-        el.style.borderRadius=Math.random()>.5?'50%':'2px';
-        el.style.animationDuration=1.5+Math.random()*2+'s';
-        el.style.animationDelay=Math.random()*.4+'s';
-        document.body.appendChild(el);
-        el.addEventListener('animationend', ()=>el.remove());
+      // ── MAILTO FALLBACK ──
+      function openMailto() {
+        const subject = encodeURIComponent('💌 Khushi ka response — ' + new Date().toLocaleTimeString('en-IN'));
+        const body    = encodeURIComponent(buildText());
+        window.open(`mailto:${YOUR_EMAIL}?subject=${subject}&body=${body}`, '_blank');
       }
-    }
-    function spawnStars(el) {
-      const r = el.getBoundingClientRect();
-      ['✦','★','✨','·','⬡'].forEach((ch,i) => {
-        const s = document.createElement('div');
-        s.className='star'; s.textContent=ch;
-        s.style.left=r.left+r.width/2+(-30+Math.random()*60)+'px';
-        s.style.top=r.top+(-10+Math.random()*20)+'px';
-        s.style.color=['#d45c3a','#c8973e','#8b7aad'][Math.floor(Math.random()*3)];
-        s.style.animationDelay=Math.random()*.3+'s';
-        document.body.appendChild(s);
-        s.addEventListener('animationend',()=>s.remove());
-      });
-    }
-    document.querySelectorAll('.pill,.chip').forEach(el=>el.addEventListener('click',()=>spawnStars(el)));
 
-    /* ===================== SECRET EGG ===================== */
-    const seq=['k','h','u','s','h','i']; let ki=0;
-    document.addEventListener('keydown', e=>{
-      if (e.key.toLowerCase()===seq[ki]) {
-        ki++;
-        if (ki===seq.length) {
-          document.getElementById('eggOverlay').classList.add('show');
-          ki=0; spawnConfetti();
+      // ── SUBMIT HANDLER ──
+      async function handleSubmit() {
+        const missing = getMissing();
+        replyMsg.className = 'status-msg';
+        replyMsg.style.display = 'none';
+
+        if (missing.length) {
+          replyMsg.innerHTML = missing.map(x => `• ${x}`).join('<br>');
+          replyMsg.className = 'status-msg err';
+          return;
         }
-      } else ki=0;
-    });
+
+        sendBtn.disabled = true;
+        sendBtn.textContent = 'Bhej raha hoon...';
+
+        try {
+          await sendViaFormspree();
+          replyMsg.textContent = '✓ Pahunch gaya! Aman ko aapka jawab mil gaya. 💌';
+          replyMsg.className   = 'status-msg ok';
+          spawnConfetti(60);
+          try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
+        } catch(err) {
+          // Formspree failed → auto open mailto
+          replyMsg.innerHTML  = '⚠ Network issue aaya. Ab email client khul raha hai — wahan se seedha bhej do.';
+          replyMsg.className  = 'status-msg err';
+          setTimeout(openMailto, 700);
+        } finally {
+          sendBtn.disabled    = false;
+          sendBtn.textContent = '💌 Bhejo';
+        }
+      }
+
+      sendBtn.addEventListener('click', handleSubmit);
+      if (mailtoBtn) {
+        mailtoBtn.addEventListener('click', openMailto);
+      }
+      stickyBtn.addEventListener('click', () => document.getElementById('send').scrollIntoView({ behavior:'smooth', block:'center' }));
+
+      // ── CONFETTI / STARS ──
+      function spawnConfetti(count = 40) {
+        const colors = ['#e45b78','#ee7156','#e7b552','#6d8f72','#9a82d7','#fff8ef'];
+        for (let i = 0; i < count; i++) {
+          const el = document.createElement('div');
+          el.className = 'confetti-piece';
+          el.style.left = Math.random() * 100 + 'vw';
+          el.style.top  = '-12px';
+          el.style.background = colors[Math.floor(Math.random() * colors.length)];
+          el.style.width  = 6 + Math.random() * 8 + 'px';
+          el.style.height = 6 + Math.random() * 8 + 'px';
+          el.style.borderRadius = Math.random() > .55 ? '50%' : '2px';
+          el.style.animationDuration = 1.4 + Math.random() * 1.9 + 's';
+          el.style.animationDelay    = Math.random() * .22 + 's';
+          document.body.appendChild(el);
+          el.addEventListener('animationend', () => el.remove());
+        }
+      }
+
+      function spawnStars(el) {
+        const r = el.getBoundingClientRect();
+        ['✦','★','✨','·','♡'].forEach(ch => {
+          const s = document.createElement('div');
+          s.className = 'star';
+          s.textContent = ch;
+          s.style.left  = r.left + r.width / 2 + (-26 + Math.random() * 52) + 'px';
+          s.style.top   = r.top + (-8 + Math.random() * 16) + 'px';
+          s.style.color = ['#e45b78','#e7b552','#9a82d7'][Math.floor(Math.random() * 3)];
+          s.style.animationDelay = Math.random() * .14 + 's';
+          document.body.appendChild(s);
+          s.addEventListener('animationend', () => s.remove());
+        });
+      }
+
+      // ── EASTER EGG ──
+      const seq = ['k','h','u','s','h','i'];
+      let ki = 0;
+      document.addEventListener('keydown', e => {
+        if (e.key.toLowerCase() === seq[ki]) {
+          ki++;
+          if (ki === seq.length) {
+            document.getElementById('eggOverlay').classList.add('show');
+            ki = 0;
+            spawnConfetti(50);
+          }
+        } else { ki = 0; }
+      });
+
+      // ── INIT ──
+      setMood(state.moodZone || 'chill');
+      if (state.shownSong) document.getElementById('songTitle').textContent = state.shownSong;
+      renderEkQ();
+      updateSticky();
     </script>
   </body>
 </html>
