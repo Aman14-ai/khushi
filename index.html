@@ -154,23 +154,36 @@
         pointer-events:none;
       }
 
-      .hero-title {
-        position:relative;z-index:2;padding:50px 22px 0;
-      }
+      .hero-title { position:relative;z-index:2;padding:50px 22px 0; }
       h1 {
         font-family:"Cormorant Garamond",serif;font-weight:600;
         font-size:clamp(58px,17vw,82px);line-height:.84;letter-spacing:-3px;
       }
       h1 em { font-style:italic;color:#ffd27b;text-shadow:0 0 26px rgba(255,210,123,.26); }
 
+      .animated-name .name-line {
+        display:inline-block;opacity:0;transform:translateY(24px) scale(.96);filter:blur(8px);
+        animation:nameReveal .9s cubic-bezier(.2,.9,.2,1) forwards;
+      }
+      .animated-name .delay-1 { animation-delay:.12s; }
+      .animated-name .delay-2 { animation-delay:.42s; }
+      .animated-name .delay-3 { animation-delay:.72s; }
+      .animated-name em { position:relative; }
+      .animated-name em::after {
+        content:"";position:absolute;left:2px;right:0;bottom:4px;height:10px;border-radius:999px;
+        background:linear-gradient(90deg,rgba(255,210,123,.12),rgba(255,138,163,.5),rgba(255,210,123,.08));
+        z-index:-1;transform:scaleX(0);transform-origin:left;
+        animation:nameUnderline .85s ease forwards;animation-delay:1.05s;
+      }
+      @keyframes nameReveal { to { opacity:1; transform:translateY(0) scale(1); filter:blur(0); } }
+      @keyframes nameUnderline { to { transform:scaleX(1); } }
+
       .hero-copy {
         margin-top:18px;max-width:310px;color:rgba(255,248,239,.68);
         font-family:"Cormorant Garamond",serif;font-style:italic;font-size:19px;line-height:1.55;
       }
 
-      .hero-actions {
-        position:absolute;left:18px;right:18px;bottom:18px;z-index:3;display:grid;gap:12px;
-      }
+      .hero-actions { position:absolute;left:18px;right:18px;bottom:18px;z-index:3;display:grid;gap:12px; }
 
       .music-panel {
         display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:13px;padding:13px;
@@ -181,8 +194,7 @@
       .vinyl {
         position:relative;width:78px;height:78px;border-radius:50%;display:grid;place-items:center;
         background:repeating-conic-gradient(#0d0c0d 0deg,#242020 3deg,#111 7deg),#111;
-        box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 10px 24px rgba(0,0,0,.24);
-        cursor:pointer;
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.05),0 10px 24px rgba(0,0,0,.24);cursor:pointer;
       }
       .vinyl.playing { animation:spin 2.6s linear infinite; }
       .vinyl::before { content:"";position:absolute;inset:13px;border-radius:50%;border:1px solid rgba(255,255,255,.08); }
@@ -209,48 +221,44 @@
       .mini-stat b { font-family:"Cormorant Garamond",serif;font-size:21px;font-weight:600;letter-spacing:-.4px; }
 
       .section { padding: 28px 16px 0; }
-
       .section-head { display:flex;align-items:end;justify-content:space-between;gap:12px;margin-bottom:15px; }
-
       .label { font-family:"Space Mono",monospace;font-size:10px;letter-spacing:2.7px;text-transform:uppercase;color:var(--muted);margin-bottom:7px; }
 
       h2 { font-family:"Cormorant Garamond",serif;font-size:clamp(38px,12vw,55px);line-height:.9;letter-spacing:-1.8px;font-weight:600; }
       h2 em { font-style:italic;color:var(--rose); }
 
       .glass-card {
-        border-radius:30px;background:var(--paper);
-        border:1px solid rgba(255,255,255,.68);
-        box-shadow:0 16px 42px rgba(49,31,27,.09);
-        backdrop-filter:blur(18px);overflow:hidden;
+        border-radius:30px;background:var(--paper);border:1px solid rgba(255,255,255,.68);
+        box-shadow:0 16px 42px rgba(49,31,27,.09);backdrop-filter:blur(18px);overflow:hidden;
       }
-
       .pad { padding: 18px; }
-
-      .pill-grid { display:flex;gap:8px;flex-wrap:wrap; }
-
-      .pill {
-        border:1px solid rgba(49,31,27,.12);border-radius:999px;padding:11px 14px;
-        background:rgba(255,255,255,.56);color:rgba(32,22,20,.7);
-        font-size:12px;font-weight:800;letter-spacing:-.1px;
-        box-shadow:0 8px 18px rgba(49,31,27,.05);cursor:pointer;
-      }
-      .pill.active {
-        color:#fff8ef;background:linear-gradient(135deg,var(--ink),#5f3028);border-color:transparent;
-      }
-
-      .mood-display {
-        margin-top:14px;display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:start;
-        padding:16px;border-radius:24px;
-        background:linear-gradient(135deg,rgba(255,255,255,.72),rgba(255,255,255,.32));
-        border:1px solid rgba(49,31,27,.08);
-      }
-      .mood-emoji { width:60px;height:60px;border-radius:21px;display:grid;place-items:center;font-size:32px;background:linear-gradient(135deg,rgba(228,91,120,.17),rgba(231,181,82,.2)); }
-      .mood-title { font-size:18px;font-weight:900;letter-spacing:-.5px;margin-bottom:6px; }
-      .mood-text { font-size:13px;color:var(--muted);line-height:1.65; }
 
       .song-card { display:grid;gap:12px; }
       .song-top { display:flex;align-items:center;justify-content:space-between;gap:12px; }
       .song-title { font-family:"Cormorant Garamond",serif;font-size:25px;line-height:1.08;letter-spacing:-.8px;font-weight:600; }
+      .song-desc { margin-top:6px;color:var(--muted);font-size:12.5px;line-height:1.6; }
+
+      .complaints-section { padding-top: 30px; }
+      .complaints-title { animation:titleFloat 3.4s ease-in-out infinite; }
+      @keyframes titleFloat { 0%,100%{transform:translateY(0);} 50%{transform:translateY(-4px);} }
+
+      .complaints-grid { display:grid;gap:12px; }
+      .complaint-card {
+        position:relative;min-height:116px;overflow:hidden;padding:18px 18px 18px 76px;border-radius:28px;
+        background:radial-gradient(circle at 100% 0%,rgba(255,138,163,.18),transparent 9rem),linear-gradient(135deg,rgba(255,255,255,.82),rgba(255,255,255,.45));
+        border:1px solid rgba(255,255,255,.72);box-shadow:0 16px 40px rgba(49,31,27,.08);
+        opacity:0;transform:translateY(22px);animation:complaintIn .75s ease forwards;
+      }
+      .complaint-card:nth-child(2){animation-delay:.16s;}
+      .complaint-card:nth-child(3){animation-delay:.32s;}
+      .complaint-no {
+        position:absolute;left:18px;top:18px;width:42px;height:42px;border-radius:16px;
+        display:grid;place-items:center;font-family:"Space Mono",monospace;font-size:11px;letter-spacing:.8px;
+        color:#fff8ef;background:linear-gradient(135deg,var(--ink),#63322b);box-shadow:0 10px 22px rgba(32,22,20,.17);
+      }
+      .complaint-card b { display:block;margin-bottom:8px;font-family:"Cormorant Garamond",serif;font-size:24px;line-height:1.05;letter-spacing:-.6px; }
+      .complaint-card p { color:var(--muted);font-size:12.8px;line-height:1.65; }
+      @keyframes complaintIn { to{opacity:1;transform:translateY(0);} }
 
       .icon-btn {
         width:44px;height:44px;flex:0 0 auto;border-radius:50%;border:0;display:grid;place-items:center;
@@ -270,13 +278,10 @@
       input:focus, textarea:focus { border-color:rgba(228,91,120,.55);box-shadow:0 0 0 4px rgba(228,91,120,.12); }
 
       .question-card { display:grid;gap:15px; }
-
       .q-status { display:flex;align-items:center;justify-content:space-between;gap:12px; }
       .q-count { font-family:"Space Mono",monospace;font-size:10px;letter-spacing:1.7px;color:var(--muted);text-transform:uppercase; }
-
       .progress-track { flex:1;height:8px;border-radius:999px;background:rgba(49,31,27,.09);overflow:hidden; }
       .progress-bar { height:100%;width:0%;border-radius:inherit;background:linear-gradient(90deg,var(--rose),var(--gold));transition:width .3s ease; }
-
       .question-text { font-family:"Cormorant Garamond",serif;font-size:27px;line-height:1.12;letter-spacing:-.7px; }
 
       .option-grid { display:grid;gap:9px; }
@@ -293,26 +298,11 @@
         background:rgba(231,181,82,.15);color:#6d4519;font-size:13px;font-weight:800;line-height:1.55;
       }
 
-      /* Submit section */
       .submit-section { padding: 28px 16px calc(100px + var(--safe-bottom)); }
-
       .submit-card {
         border-radius:32px;padding:22px;
-        background:
-          radial-gradient(circle at 12% 0%,rgba(255,138,163,.22),transparent 10rem),
-          linear-gradient(145deg,#211614,#4f2824);
-        color:#fff8ef;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.12);
-        display:grid;gap:14px;
-      }
-
-      .submit-emotion {
-        font-family:"Cormorant Garamond",serif;font-size:32px;line-height:1.1;letter-spacing:-.8px;font-weight:600;
-      }
-
-      .submit-emotion em { font-style:italic;color:#ffd27b; }
-
-      .submit-note {
-        color:rgba(255,248,239,.6);font-size:12.5px;line-height:1.7;
+        background:radial-gradient(circle at 12% 0%,rgba(255,138,163,.22),transparent 10rem),linear-gradient(145deg,#211614,#4f2824);
+        color:#fff8ef;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.12);display:grid;gap:14px;
       }
 
       .submit-btn {
@@ -327,8 +317,7 @@
       .mailto-btn {
         width:100%;min-height:48px;border:1px solid rgba(255,255,255,.22);border-radius:999px;
         color:rgba(255,248,239,.78);background:rgba(255,255,255,.08);
-        font-weight:800;letter-spacing:-.1px;cursor:pointer;font-size:13px;
-        backdrop-filter:blur(8px);
+        font-weight:800;letter-spacing:-.1px;cursor:pointer;font-size:13px;backdrop-filter:blur(8px);
       }
 
       .status-msg { display:none;margin-top:4px;padding:12px 13px;border-radius:17px;font-size:12px;line-height:1.55; }
@@ -365,10 +354,8 @@
       }
       .footer-card h2 { position:relative;font-size:40px;margin-bottom:12px; }
       .footer-card p { position:relative;color:rgba(255,248,239,.62);font-size:13px;line-height:1.85; }
-
       .about-tags { position:relative;display:flex;flex-wrap:wrap;gap:8px;margin-top:15px; }
       .about-tags span { border-radius:999px;padding:9px 12px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.08);font-size:11px;font-weight:800;color:rgba(255,248,239,.72); }
-
       .tiny-bottom {
         position:relative;margin-top:18px;padding-top:15px;border-top:1px solid rgba(255,255,255,.08);
         display:flex;justify-content:space-between;gap:12px;
@@ -390,7 +377,6 @@
 
       .confetti-piece { position:fixed;pointer-events:none;z-index:100;width:8px;height:8px;border-radius:2px;animation:confettiFall linear forwards; }
       @keyframes confettiFall { 0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(760deg);opacity:0;} }
-
       .star { position:fixed;font-size:18px;pointer-events:none;z-index:100;animation:starFloat 1.1s ease-out forwards; }
       @keyframes starFloat { 0%{transform:translateY(0) scale(.5);opacity:1;}100%{transform:translateY(-76px) scale(1.22);opacity:0;} }
 
@@ -419,7 +405,7 @@
               <span>Khushi</span>
             </div>
             <nav class="nav-pills" aria-label="Page navigation">
-              <a href="#mood">Mood</a>
+              <a href="#complaints">Complaints</a>
               <a href="#ek">Baat</a>
               <a href="#reply">Reply</a>
             </nav>
@@ -429,11 +415,11 @@
         <div class="marquee-wrap" aria-label="Message marquee">
           <div class="marquee-inner">
             <span>always leaned towards maithalani</span>
-            <span>mujhe aapse milne ka soubhagya mila</span>
+            <span>I know you are a right girl</span>
             <span>Khushi Jha — Jha ji</span>
             <span>kya ham dost ban sakte hai</span>
-            <span>always leaned towards maithalani</span>
-            <span>mujhe aapse milne ka soubhagya mila</span>
+            <span>aapka gussa bhai saab</span>
+            <span>I know you are a right girl</span>
             <span>Khushi Jha — Jha ji</span>
             <span>kya ham dost ban sakte hai</span>
           </div>
@@ -442,80 +428,73 @@
         <section class="hero" id="home">
           <div class="hero-card">
             <div class="hero-title">
-              <h1>Hey,<br /><em>Khushi</em><br />Jha</h1>
+              <h1 class="animated-name" aria-label="Hey Khushi Jha">
+                <span class="name-line delay-1">Hey,</span><br />
+                <em class="name-line delay-2">Khushi</em><br />
+                <span class="name-line delay-3">Jha</span>
+              </h1>
               <p class="hero-copy">aspire to be your friend — respectfully, slowly, and honestly.</p>
             </div>
-
             <div class="hero-actions">
               <div class="music-panel">
                 <div class="vinyl" id="vinyl" aria-hidden="true"></div>
                 <div class="track-info">
-                  <strong>Local song</strong>
+                  <strong id="nowPlaying">Arz kiya hai</strong>
                   <span id="timeDisp">tap to play · 0:00</span>
                 </div>
                 <button class="play-btn" id="playBtn" type="button" aria-label="Play song">▶</button>
               </div>
-
               <div class="mini-stat-row">
-                <div class="mini-stat">
-                  <span>for whom</span>
-                  <b>Khushi Jha</b>
-                </div>
-                <div class="mini-stat">
-                  <span>vibe</span>
-                  <b>soft + honest</b>
-                </div>
+                <div class="mini-stat"><span>for whom</span><b>Khushi Jha</b></div>
+                <div class="mini-stat"><span>vibe</span><b>soft + honest</b></div>
               </div>
             </div>
           </div>
-          <audio id="song" preload="auto" src="./song.mp3"></audio>
+          <audio id="song" preload="auto" autoplay playsinline></audio>
         </section>
 
-        <!-- MOOD -->
-        <section class="section" id="mood">
+        <!-- COMPLAINTS -->
+        <section class="section complaints-section" id="complaints">
           <div class="section-head">
             <div>
-              <h2>Aap<br /><em>kaisi</em> hain ?</h2>
+              <div class="label">soft complains</div>
+              <h2 class="complaints-title">Thodi si<br /><em>complaints</em></h2>
             </div>
           </div>
-
-          <div class="glass-card pad">
-            <div class="pill-grid" id="moodPills">
-              <button class="pill active" type="button" data-k="chill">☁️ Chill</button>
-              <button class="pill" type="button" data-k="mast">✨ Mast</button>
-              <button class="pill" type="button" data-k="busy">📚 Busy</button>
-              <button class="pill" type="button" data-k="overthink">🌙 Overthinking</button>
-              <button class="pill" type="button" data-k="random">🎲 Random</button>
-            </div>
-
-            <div class="mood-display">
-              <div class="mood-emoji" id="mIcon">☁️</div>
-              <div>
-                <div class="mood-title" id="mTitle">Chill mode</div>
-                <div class="mood-text" id="mText">Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.</div>
-              </div>
-            </div>
+          <div class="complaints-grid">
+            <article class="complaint-card">
+              <span class="complaint-no">01</span>
+              <b>Aap gussa bahut karti hain</b>
+              <p>sayad main aapki madad kar sakta hu aapke mood theek krne me</p>
+            </article>
+            <article class="complaint-card">
+              <span class="complaint-no">02</span>
+              <b>Aap reply bhi nahi karti hain</b>
+              <p>Reply late ho toh chalega, par ek chhota sa response de diya kro yrr.</p>
+            </article>
+            <article class="complaint-card">
+              <span class="complaint-no">03</span>
+              <b>Ignore karti hain, which hurts</b>
+              <p>Main pressure nahi de raha, bas honestly bol raha hoon ki ignore hona thoda hurt karta hai.</p>
+            </article>
           </div>
         </section>
 
         <!-- SONG -->
         <section class="section" id="song-section">
           <div class="section-head">
-            <div>
-              <h2>Ek<br /><em>gaana</em></h2>
-            </div>
+            <div><h2>Ek<br /><em>gaana</em></h2></div>
           </div>
-
           <div class="glass-card pad song-card">
             <div class="song-top">
               <div>
                 <div class="song-title" id="songTitle">Arz kiya hai</div>
+                <p class="song-desc" id="songDesc">Queue mein pehla gaana ready hai.</p>
               </div>
-              <button class="icon-btn" type="button" id="shuffleSong" aria-label="Shuffle song">↻</button>
+              <button class="icon-btn" type="button" id="shuffleSong" aria-label="Next song">↻</button>
             </div>
-
             <div class="field">
-              <label for="songSuggestion" style="font-size:12px;font-weight:900;letter-spacing:-.1px;color:rgba(32,22,20,.78);">Aapka favourite song <span style="color:var(--muted);font-weight:600;">(optional)</span></label>
+              <label for="songSuggestion">Aapka favourite song</label>
               <input id="songSuggestion" type="text" placeholder="Song name ya artist..." autocomplete="off" />
             </div>
           </div>
@@ -524,23 +503,18 @@
         <!-- QUESTIONS -->
         <section class="section" id="ek">
           <div class="section-head">
-            <div>
-              <h2>Aapke<br /><em>Vichaar</em></h2>
-            </div>
+            <div><h2>Aapke<br /><em>Vichaar</em></h2></div>
           </div>
-
           <div class="glass-card pad question-card">
             <div class="q-status">
               <span class="q-count" id="ekProgress">Question 1 of 3</span>
               <div class="progress-track"><div class="progress-bar" id="progressBar"></div></div>
             </div>
-
             <div class="question-text" id="ekQ">Kya main aapka dost banne ke laayak hoon?</div>
             <div class="option-grid" id="ekBtns"></div>
             <div class="response-box" id="ekResult"></div>
-
             <div class="field">
-              <label for="ekFreeText" style="font-size:12px;font-weight:900;">Honest note <span style="color:var(--muted);font-weight:600;">(optional)</span></label>
+              <label for="ekFreeText">Honest note</label>
               <textarea id="ekFreeText" placeholder="Agar kuch aur kehna ho toh yahan likh sakti ho..."></textarea>
             </div>
           </div>
@@ -549,11 +523,8 @@
         <!-- REPLY -->
         <section class="section" id="reply">
           <div class="section-head">
-            <div>
-              <h2>Apne <em> Baare </em> me </h2>
-            </div>
+            <div><h2>Apne <em>Baare</em> me</h2></div>
           </div>
-
           <div class="glass-card pad">
             <div class="field" style="margin-top:0;">
               <textarea id="replyText" placeholder="Kuch bhi. Jo aapke man mein ho..." style="min-height:140px;"></textarea>
@@ -565,6 +536,7 @@
         <section class="submit-section" id="send">
           <div class="submit-card">
             <button class="submit-btn" id="sendBtn" type="button">💌 Bhejo</button>
+            <button class="mailto-btn" id="mailtoBtn" type="button" style="display:none;">📧 Email se bhejo (fallback)</button>
             <div class="status-msg" id="replyMsg"></div>
           </div>
         </section>
@@ -574,7 +546,6 @@
             <div class="label" style="color:#e7b552">About me</div>
             <h2>Aman Choudhary</h2>
             <p>I am Aman Choudhary, from Kusheshwar Asthan, Darbhanga. I belong to a Hindu Brahman family and I am currently pursuing B.Tech from IIT Bhubaneswar. I have just completed my 2nd year</p>
-        
             <div class="about-tags">
               <span>IIT Bhubaneswar</span>
               <span>Emotionally Sensitive</span>
@@ -612,155 +583,174 @@
     </div>
 
     <script>
-      // ── CONFIG ── Replace with your actual Formspree ID and YOUR email ──
-      const FORM_ENDPOINT = 'https://formspree.io/f/mnjrbqgy';
-      const YOUR_EMAIL    = 'amansachi2005@gmail.com'; // ← your email for mailto fallback
-      const STORAGE_KEY   = 'khushiBundledResponseV3';
+      // ── CONFIG ──
+      const WEB3FORMS_KEY  = 'ef40f324-0ff1-4153-a0db-cd77af2f2192';
+      const WEB3FORMS_URL  = 'https://api.web3forms.com/submit';
+      const YOUR_EMAIL     = 'mechanical.content2025@gmail.com';
+      const STORAGE_KEY    = 'khushiBundledResponseV4';
+      const SONG_INDEX_KEY = 'khushiQueueSongIndexV1';
 
-      // ── DATA ──
-      const moods = {
-        chill:     { icon:'☁️',  title:'Chill mode',        text:'Aaj ka scene calm hai. Koi rush nahi, koi noise nahi. Bas thoda sa light rehna hai.' },
-        mast:      { icon:'✨',  title:'Mast mood',          text:'Aaj wali vibe bright hai. Music, fun, aur thodi si hasi banti hai.' },
-        busy:      { icon:'📚', title:'Busy but okay',      text:'Pressure se zyada important tum ho. Ek kaam ek time — wahi kaafi hai.' },
-        overthink: { icon:'🌙', title:'Overthinking alert', text:'Sab answers abhi milna zaroori nahi. Mind ko bas thoda rest chahiye.' },
-        random:    { icon:'🎲', title:'Random vibe',         text:'Koi fixed mood nahi? Perfect. Random bhi ek mood hota hai.' }
-      };
+      // ── SONG QUEUE ──
+      const playlist = [
+        { title:'Arz kiya hai',   src:'./arz kiya hai.mp3',   desc:'Queue ka pehla soft gaana.' },
+        { title:'Jo tum mere ho', src:'./jo tum mere ho.mp3', desc:'Calm, sweet aur thoda sa dil se.' },
+        { title:'Sooraj duba hai',src:'./sooraj duba hai.mp3',desc:'Light, happy aur evening vibe.' },
+        { title:'Iktara',         src:'./iktara.mp3',         desc:'Soft, peaceful aur khidki ke paas wali feeling.' },
+        { title:'Illahi',         src:'./illahi.mp3',         desc:'Thodi energy, thoda travel, thoda sa smile.' }
+      ];
 
-      const songs = [
-        { t:'Arz kiya hai', d:'Soft mood ke liye. Headphones lagao aur thoda slow ho jao.' },
-        { t:'Iktara',                  d:'Soft, calm, aur thoda sa khidki ke paas baithne wala mood.' },
-        { t:'Arz kiya hai',                  d:'Late evening type feel ke liye.' },
-        { t:'Jo tum mere ho',                   d:'Calm vibe aur light sa smile.' },
-        { t:'Kho Gaye Hum Kahan',      d:'Akele, light, thoda dreamy mood.' },
-        { t:'Ilahi',                   d:'Agar energy thodi upar chahiye.' },
-        { t:'Tum Se Hi',               d:'Ek bahut pure wali vibe.' }
+      const complaints = [
+        'Aap gussa bahut karti hain',
+        'Aap reply bhi nahi karti hain',
+        'Ignore karti hain, which hurts'
       ];
 
       const qs = [
-        { q:'Kya main aapka dost banne ke laayak hoon?', opts:[
-          { t:'Haan, bilkul 🙂', r:'Thank you, yeh mere liye kaafi special hai.' },
-          { t:'Pehle aur baat karte hain', r:'Bilkul, slow aur respectfully hi sahi.' },
-          { t:'Sochungi', r:'Fair enough. Aapka honest answer important hai.' }
-        ]},
-        { q:'Kya aap mujhe ek mauka dena chahengi?', opts:[
-          { t:'Haan, ek chance', r:'Main is chance ko respectfully value karunga.' },
-          { t:'Dheere dheere', r:'Perfect. Dosti mein comfort sabse important hai.' },
-          { t:'Abhi sure nahi', r:'No pressure. Aapka comfort first.' }
-        ]},
-        { q:'Aapko mujhse baat karna comfortable lagta hai?', opts:[
-          { t:'Haan', r:'Yeh jaan kar genuinely achha laga.' },
-          { t:'Thoda time chahiye', r:'Bilkul, jitna time chahiye utna.' },
-          { t:'Kabhi kabhi', r:'Understood. Main boundaries respect karunga.' }
-        ]}
+        {
+          q: 'Kya main aapka dost banne ke laayak hoon?',
+          opts: [
+            { t:'Haan, bilkul 🙂',        r:'Thank you, yeh mere liye kaafi special hai.' },
+            { t:'Pehle aur baat karte hain',r:'Bilkul, slow aur respectfully hi sahi.' },
+            { t:'Sochungi',                r:'Fair enough. Aapka honest answer important hai.' }
+          ]
+        },
+        {
+          q: 'Kya aap mujhe ek mauka dena chahengi?',
+          opts: [
+            { t:'Haan, ek chance', r:'Main is chance ko respectfully value karunga.' },
+            { t:'Dheere dheere',   r:'Perfect. Dosti mein comfort sabse important hai.' },
+            { t:'Abhi sure nahi',  r:'No pressure. Aapka comfort first.' }
+          ]
+        },
+        {
+          q: 'Aapko mujhse baat karna comfortable lagta hai?',
+          opts: [
+            { t:'Haan',              r:'Yeh jaan kar genuinely achha laga.' },
+            { t:'Thoda time chahiye',r:'Bilkul, jitna time chahiye utna.' },
+            { t:'Kabhi kabhi',       r:'Understood. Main boundaries respect karunga.' }
+          ]
+        }
       ];
 
       // ── STATE ──
       let saved = {};
-      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) {}
+      try { saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { saved = {}; }
 
       const state = Object.assign({
         openedAt: new Date().toISOString(),
-        moodZone: 'chill',
-        shownSong: 'Arz kiya hai',
-        songSuggestion: '',
-        ekBaat: [],
-        ekFreeText: '',
-        replyText: ''
+        shownSong: '', songSuggestion: '', ekBaat: [], ekFreeText: '', replyText: ''
       }, saved);
 
-      let qi = Math.min(state.ekBaat.length, qs.length - 1);
+      const answeredCount        = () => qs.filter(item => state.ekBaat.some(x => x.question === item.q)).length;
+      const firstUnansweredIndex = () => qs.findIndex(item => !state.ekBaat.some(x => x.question === item.q));
+      let qi = firstUnansweredIndex() === -1 ? qs.length - 1 : firstUnansweredIndex();
 
       // ── ELEMENTS ──
-      const audio     = document.getElementById('song');
-      const playBtn   = document.getElementById('playBtn');
-      const vinyl     = document.getElementById('vinyl');
-      const timeDisp  = document.getElementById('timeDisp');
-      const moodPills = document.querySelectorAll('#moodPills .pill');
-      const songSugg  = document.getElementById('songSuggestion');
-      const ekFreeText= document.getElementById('ekFreeText');
-      const replyText = document.getElementById('replyText');
-      const sendBtn   = document.getElementById('sendBtn');
-      const mailtoBtn = document.getElementById('mailtoBtn');
-      const stickyBtn = document.getElementById('stickyBtn');
-      const replyMsg  = document.getElementById('replyMsg');
+      const audio      = document.getElementById('song');
+      const playBtn    = document.getElementById('playBtn');
+      const vinyl      = document.getElementById('vinyl');
+      const timeDisp   = document.getElementById('timeDisp');
+      const nowPlaying = document.getElementById('nowPlaying');
+      const songTitleEl= document.getElementById('songTitle');
+      const songDescEl = document.getElementById('songDesc');
+      const songSugg   = document.getElementById('songSuggestion');
+      const ekFreeText = document.getElementById('ekFreeText');
+      const replyText  = document.getElementById('replyText');
+      const sendBtn    = document.getElementById('sendBtn');
+      const mailtoBtn  = document.getElementById('mailtoBtn');
+      const stickyBtn  = document.getElementById('stickyBtn');
+      const replyMsg   = document.getElementById('replyMsg');
 
+      // ── STORAGE ──
       function persist() {
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
         updateSticky();
       }
 
       // ── AUDIO ──
-      function fmtTime(s) {
-        if (!isFinite(s)) return '0:00';
-        return `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2,'0')}`;
+      function getTrackIndexForThisLoad() {
+        let last = Number.parseInt(localStorage.getItem(SONG_INDEX_KEY) || '-1', 10);
+        if (Number.isNaN(last)) last = -1;
+        const next = (last + 1) % playlist.length;
+        localStorage.setItem(SONG_INDEX_KEY, String(next));
+        return next;
       }
 
-      async function toggleAudio() {
-        if (audio.paused) {
-          try {
-            await audio.play();
-            playBtn.textContent = '❚❚';
-            vinyl.classList.add('playing');
-          } catch(e) {
-            timeDisp.textContent = 'tap again to play';
-          }
-        } else {
-          audio.pause();
-          playBtn.textContent = '▶';
-          vinyl.classList.remove('playing');
+      let currentTrackIndex = getTrackIndexForThisLoad();
+      let autoplayBlocked   = false;
+      let userPausedAudio   = false;
+
+      function fmtTime(s) {
+        if (!Number.isFinite(s)) return '0:00';
+        return `${Math.floor(s/60)}:${String(Math.floor(s%60)).padStart(2,'0')}`;
+      }
+
+      function setAudioUI(playing) {
+        playBtn.textContent = playing ? '❚❚' : '▶';
+        vinyl.classList.toggle('playing', playing);
+        timeDisp.textContent = `${playing?'playing':'tap to play'} · ${fmtTime(audio.currentTime)}`;
+      }
+
+      function loadTrack(index) {
+        currentTrackIndex = ((index % playlist.length) + playlist.length) % playlist.length;
+        const t = playlist[currentTrackIndex];
+        audio.pause(); audio.src = t.src; audio.load(); audio.volume = 0.82;
+        nowPlaying.textContent  = t.title;
+        songTitleEl.textContent = t.title;
+        songDescEl.textContent  = t.desc;
+        state.shownSong = `${t.title} (${t.src})`;
+        localStorage.setItem(SONG_INDEX_KEY, String(currentTrackIndex));
+        persist(); setAudioUI(false);
+      }
+
+      async function playAudio(isAutoplay = false) {
+        autoplayBlocked = false; userPausedAudio = false;
+        try { await audio.play(); setAudioUI(true); }
+        catch(e) {
+          setAudioUI(false);
+          if (isAutoplay) { autoplayBlocked = true; timeDisp.textContent = 'tap anywhere to start · autoplay blocked'; }
+          else { timeDisp.textContent = 'tap again to play'; }
         }
       }
 
+      function pauseAudio() { userPausedAudio = true; audio.pause(); setAudioUI(false); }
+      function toggleAudio() { audio.paused ? playAudio(false) : pauseAudio(); }
+      function playNextTrack(shouldPlay = true) { loadTrack(currentTrackIndex + 1); if (shouldPlay) playAudio(false); }
+
       playBtn.addEventListener('click', toggleAudio);
       vinyl.addEventListener('click', toggleAudio);
-      audio.addEventListener('timeupdate', () => {
-        timeDisp.textContent = audio.paused
-          ? `tap to play · ${fmtTime(audio.currentTime)}`
-          : `playing · ${fmtTime(audio.currentTime)}`;
-      });
-      audio.addEventListener('ended', () => {
-        playBtn.textContent = '▶';
-        vinyl.classList.remove('playing');
-        audio.currentTime = 0;
-        timeDisp.textContent = 'tap to play · 0:00';
-      });
-
-      // ── MOOD ──
-      function setMood(k) {
-        const m = moods[k]; if (!m) return;
-        state.moodZone = k;
-        document.getElementById('mIcon').textContent  = m.icon;
-        document.getElementById('mTitle').textContent = m.title;
-        document.getElementById('mText').textContent  = m.text;
-        moodPills.forEach(b => b.classList.toggle('active', b.dataset.k === k));
-        persist();
-      }
-      moodPills.forEach(b => b.addEventListener('click', () => { setMood(b.dataset.k); spawnStars(b); }));
-
-      // ── SONG ──
+      document.addEventListener('pointerdown', () => {
+        if (autoplayBlocked && audio.paused && !userPausedAudio) playAudio(false);
+      }, { once: true });
+      audio.addEventListener('timeupdate', () => setAudioUI(!audio.paused));
+      audio.addEventListener('play',  () => setAudioUI(true));
+      audio.addEventListener('pause', () => { if (!audio.ended) setAudioUI(false); });
+      audio.addEventListener('ended', () => playNextTrack(true));
       document.getElementById('shuffleSong').addEventListener('click', () => {
-        const s = songs[Math.floor(Math.random() * songs.length)];
-        state.shownSong = s.t;
-        document.getElementById('songTitle').textContent = s.t;
-        document.getElementById('songDesc').textContent  = s.d;
-        persist();
+        playNextTrack(!audio.paused);
         spawnStars(document.getElementById('shuffleSong'));
       });
 
-      songSugg.value = state.songSuggestion || '';
-      songSugg.addEventListener('input', () => { state.songSuggestion = songSugg.value.trim(); persist(); });
+      // ── INPUTS ──
+      songSugg.value    = state.songSuggestion || '';
+      ekFreeText.value  = state.ekFreeText     || '';
+      replyText.value   = state.replyText      || '';
+      songSugg.addEventListener('input',   () => { state.songSuggestion = songSugg.value.trim();   persist(); });
+      ekFreeText.addEventListener('input', () => { state.ekFreeText     = ekFreeText.value.trim(); persist(); });
+      replyText.addEventListener('input',  () => { state.replyText      = replyText.value.trim();  persist(); });
 
       // ── QUESTIONS ──
       function renderEkQ() {
         const d = qs[qi];
-        const answered = Math.min(state.ekBaat.length, qs.length);
-        document.getElementById('ekQ').textContent = d.q;
-        document.getElementById('ekProgress').textContent = answered >= qs.length
+        const total    = answeredCount();
+        const existing = state.ekBaat.find(x => x.question === d.q);
+
+        document.getElementById('ekQ').textContent       = d.q;
+        document.getElementById('ekProgress').textContent = total >= qs.length
           ? 'Saare sawal ho gaye ✦'
           : `Question ${qi + 1} of ${qs.length}`;
-        document.getElementById('progressBar').style.width = `${(answered / qs.length) * 100}%`;
+        document.getElementById('progressBar').style.width = `${(total / qs.length) * 100}%`;
 
-        const existing = state.ekBaat.find(x => x.question === d.q);
         const ekBtns = document.getElementById('ekBtns');
         ekBtns.innerHTML = '';
         d.opts.forEach(opt => {
@@ -774,7 +764,7 @@
 
         const ekResult = document.getElementById('ekResult');
         if (existing) { ekResult.textContent = existing.messageShown; ekResult.style.display = 'block'; }
-        else ekResult.style.display = 'none';
+        else { ekResult.textContent = ''; ekResult.style.display = 'none'; }
       }
 
       function handleEkAnswer(question, opt, btn) {
@@ -784,14 +774,14 @@
 
         document.querySelectorAll('#ekBtns .option-btn').forEach(x => x.classList.remove('selected'));
         btn.classList.add('selected');
-        document.getElementById('ekResult').textContent = opt.r;
+        document.getElementById('ekResult').textContent  = opt.r;
         document.getElementById('ekResult').style.display = 'block';
 
-        persist();
-        spawnConfetti(18);
+        persist(); spawnConfetti(18);
 
-        if (state.ekBaat.length < qs.length) {
-          setTimeout(() => { qi = Math.min(state.ekBaat.length, qs.length - 1); renderEkQ(); }, 650);
+        const next = firstUnansweredIndex();
+        if (next !== -1) {
+          setTimeout(() => { qi = next; renderEkQ(); }, 650);
         } else {
           setTimeout(() => {
             document.getElementById('ekProgress').textContent = 'Saare sawal ho gaye ✦';
@@ -800,87 +790,98 @@
         }
       }
 
-      ekFreeText.value = state.ekFreeText || '';
-      ekFreeText.addEventListener('input', () => { state.ekFreeText = ekFreeText.value.trim(); persist(); });
-
-      replyText.value = state.replyText || '';
-      replyText.addEventListener('input', () => { state.replyText = replyText.value.trim(); persist(); });
-
-      // ── VALIDATION — only 2 required: ≥1 question + final reply ──
+      // ── VALIDATION ──
       function getMissing() {
-        const missing = [];
-        if (state.ekBaat.length === 0) missing.push('Kam se kam ek sawal ka jawab do.');
-        if (!state.replyText)          missing.push('Apna jawab likho (reply section).');
-        return missing;
+        const m = [];
+        if (answeredCount() < qs.length) m.push(`Saare ${qs.length} sawalon ka jawab do.`);
+        if (!state.songSuggestion)       m.push('Favourite song likho.');
+        if (!state.ekFreeText)           m.push('Honest note likho.');
+        if (!state.replyText)            m.push('Apne baare mein kuch likho.');
+        return m;
       }
 
       function updateSticky() {
-        const missing = getMissing();
-        const title = document.getElementById('stickyTitle');
-        const sub   = document.getElementById('stickySub');
-        if (missing.length === 0) {
-          title.textContent = 'Taiyaar hai 💌';
-          sub.textContent   = 'Ek click mein bhej do.';
-        } else {
-          title.textContent = `${missing.length} cheez baaki`;
-          sub.textContent   = missing[0];
-        }
+        const m = getMissing();
+        document.getElementById('stickyTitle').textContent = m.length === 0 ? 'Taiyaar hai 💌' : `${m.length} cheez baaki`;
+        document.getElementById('stickySub').textContent   = m.length === 0 ? 'Sab details complete hain.' : m[0];
       }
 
-      // ── BUILD CONTENT ──
-      function buildText() {
-        const mood = moods[state.moodZone]?.title || state.moodZone;
-        const time = new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' });
+      function goToFirstMissing() {
+        if (answeredCount() < qs.length) {
+          document.getElementById('ek').scrollIntoView({ behavior:'smooth', block:'center' }); return;
+        }
+        if (!state.songSuggestion) {
+          document.getElementById('song-section').scrollIntoView({ behavior:'smooth', block:'center' });
+          setTimeout(() => songSugg.focus(), 450); return;
+        }
+        if (!state.ekFreeText) {
+          document.getElementById('ek').scrollIntoView({ behavior:'smooth', block:'center' });
+          setTimeout(() => ekFreeText.focus(), 450); return;
+        }
+        if (!state.replyText) {
+          document.getElementById('reply').scrollIntoView({ behavior:'smooth', block:'center' });
+          setTimeout(() => replyText.focus(), 450); return;
+        }
+        document.getElementById('send').scrollIntoView({ behavior:'smooth', block:'center' });
+      }
 
+      // ── BUILD EMAIL BODY ──
+      function buildText() {
+        const time = new Date().toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' });
         const answers = qs.map((item, i) => {
           const found = state.ekBaat.find(x => x.question === item.q);
           return `Q${i+1}. ${item.q}\nAnswer: ${found ? found.answer : '(not answered)'}`;
         }).join('\n\n');
 
-        return `Khushi ka Response — ${time}
+        return `💌 KHUSHI KA RESPONSE
+Submitted at: ${time}
 
-MOOD: ${mood}
+--- COMPLAINTS SHOWN ---
+${complaints.map((c,i) => `${i+1}. ${c}`).join('\n')}
 
-SONG SHOWN: ${state.shownSong}
-FAVOURITE SONG: ${state.songSuggestion || '(not filled)'}
+--- SONG ---
+Website song: ${state.shownSong || '(not started)'}
+Favourite song: ${state.songSuggestion || '(not filled)'}
 
-SAWAL KE JAWAB:
+--- SAWAL KE JAWAB ---
 ${answers}
 
-HONEST NOTE:
+--- HONEST NOTE ---
 ${state.ekFreeText || '(not filled)'}
 
-FINAL REPLY:
-${state.replyText}
-`;
+--- APNE BAARE MEIN ---
+${state.replyText || '(not filled)'}`;
       }
 
-      // ── FORMSPREE SEND ──
-      async function sendViaFormspree() {
+      // ── WEB3FORMS SEND ──
+      async function sendViaWeb3Forms() {
         const payload = {
-          _subject: '💌 Khushi ka response — ' + new Date().toLocaleString('en-IN'),
-          Mood: moods[state.moodZone]?.title || state.moodZone,
-          'Song Shown': state.shownSong,
-          'Favourite Song': state.songSuggestion || '(not filled)',
-          'Question Answers': qs.map((item, i) => {
-            const found = state.ekBaat.find(x => x.question === item.q);
-            return `Q${i+1}: ${item.q}\nA: ${found ? found.answer : '(not answered)'}`;
-          }).join('\n\n'),
-          'Honest Note': state.ekFreeText || '(not filled)',
-          'Final Reply': state.replyText,
-          'Submitted At': new Date().toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }),
-          message: buildText()
+          access_key:         WEB3FORMS_KEY,
+          subject:            '💌 Khushi ka response — ' + new Date().toLocaleString('en-IN'),
+          from_name:          'Khushi Website',
+          replyto:            YOUR_EMAIL,
+          'Complaints Shown': complaints.join(' | '),
+          'Website Song':     state.shownSong     || '(not started)',
+          'Favourite Song':   state.songSuggestion || '(not filled)',
+          'Q1 - Laayak hoon?':     (state.ekBaat.find(x => x.question === qs[0].q) || {}).answer || '(not answered)',
+          'Q2 - Ek mauka?':        (state.ekBaat.find(x => x.question === qs[1].q) || {}).answer || '(not answered)',
+          'Q3 - Comfortable?':     (state.ekBaat.find(x => x.question === qs[2].q) || {}).answer || '(not answered)',
+          'Honest Note':           state.ekFreeText  || '(not filled)',
+          'Apne Baare Mein':       state.replyText   || '(not filled)',
+          'Submitted At':          new Date().toLocaleString('en-IN', { dateStyle:'medium', timeStyle:'short' }),
+          message:                 buildText()
         };
 
-        const res = await fetch(FORM_ENDPOINT, {
+        const res = await fetch(WEB3FORMS_URL, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
           body: JSON.stringify(payload)
         });
 
-        if (!res.ok) {
-          const err = await res.json().catch(() => ({}));
-          throw new Error(err.error || `HTTP ${res.status}`);
+        const data = await res.json().catch(() => ({}));
+
+        if (!res.ok || data.success === false) {
+          throw new Error(data.message || `HTTP ${res.status}`);
         }
         return true;
       }
@@ -895,29 +896,31 @@ ${state.replyText}
       // ── SUBMIT HANDLER ──
       async function handleSubmit() {
         const missing = getMissing();
-        replyMsg.className = 'status-msg';
+        replyMsg.className    = 'status-msg';
         replyMsg.style.display = 'none';
+        mailtoBtn.style.display = 'none';
 
         if (missing.length) {
-          replyMsg.innerHTML = missing.map(x => `• ${x}`).join('<br>');
-          replyMsg.className = 'status-msg err';
+          replyMsg.innerHTML  = missing.map(x => `• ${x}`).join('<br>');
+          replyMsg.className  = 'status-msg err';
+          goToFirstMissing();
           return;
         }
 
-        sendBtn.disabled = true;
+        sendBtn.disabled    = true;
         sendBtn.textContent = 'Bhej raha hoon...';
 
         try {
-          await sendViaFormspree();
+          await sendViaWeb3Forms();
           replyMsg.textContent = '✓ Pahunch gaya! Aman ko aapka jawab mil gaya. 💌';
           replyMsg.className   = 'status-msg ok';
+          mailtoBtn.style.display = 'none';
           spawnConfetti(60);
           try { localStorage.removeItem(STORAGE_KEY); } catch(e) {}
         } catch(err) {
-          // Formspree failed → auto open mailto
-          replyMsg.innerHTML  = '⚠ Network issue aaya. Ab email client khul raha hai — wahan se seedha bhej do.';
+          replyMsg.innerHTML  = `⚠ Submit nahi hua (${err.message || 'network error'}). Neeche fallback button se try karo.`;
           replyMsg.className  = 'status-msg err';
-          setTimeout(openMailto, 700);
+          mailtoBtn.style.display = 'block';
         } finally {
           sendBtn.disabled    = false;
           sendBtn.textContent = '💌 Bhejo';
@@ -925,10 +928,8 @@ ${state.replyText}
       }
 
       sendBtn.addEventListener('click', handleSubmit);
-      if (mailtoBtn) {
-        mailtoBtn.addEventListener('click', openMailto);
-      }
-      stickyBtn.addEventListener('click', () => document.getElementById('send').scrollIntoView({ behavior:'smooth', block:'center' }));
+      mailtoBtn.addEventListener('click', openMailto);
+      stickyBtn.addEventListener('click', goToFirstMissing);
 
       // ── CONFETTI / STARS ──
       function spawnConfetti(count = 40) {
@@ -936,14 +937,14 @@ ${state.replyText}
         for (let i = 0; i < count; i++) {
           const el = document.createElement('div');
           el.className = 'confetti-piece';
-          el.style.left = Math.random() * 100 + 'vw';
-          el.style.top  = '-12px';
-          el.style.background = colors[Math.floor(Math.random() * colors.length)];
-          el.style.width  = 6 + Math.random() * 8 + 'px';
-          el.style.height = 6 + Math.random() * 8 + 'px';
-          el.style.borderRadius = Math.random() > .55 ? '50%' : '2px';
+          el.style.left              = Math.random() * 100 + 'vw';
+          el.style.top               = '-12px';
+          el.style.background        = colors[Math.floor(Math.random() * colors.length)];
+          el.style.width             = 6 + Math.random() * 8 + 'px';
+          el.style.height            = 6 + Math.random() * 8 + 'px';
+          el.style.borderRadius      = Math.random() > 0.55 ? '50%' : '2px';
           el.style.animationDuration = 1.4 + Math.random() * 1.9 + 's';
-          el.style.animationDelay    = Math.random() * .22 + 's';
+          el.style.animationDelay    = Math.random() * 0.22 + 's';
           document.body.appendChild(el);
           el.addEventListener('animationend', () => el.remove());
         }
@@ -953,12 +954,12 @@ ${state.replyText}
         const r = el.getBoundingClientRect();
         ['✦','★','✨','·','♡'].forEach(ch => {
           const s = document.createElement('div');
-          s.className = 'star';
-          s.textContent = ch;
-          s.style.left  = r.left + r.width / 2 + (-26 + Math.random() * 52) + 'px';
-          s.style.top   = r.top + (-8 + Math.random() * 16) + 'px';
-          s.style.color = ['#e45b78','#e7b552','#9a82d7'][Math.floor(Math.random() * 3)];
-          s.style.animationDelay = Math.random() * .14 + 's';
+          s.className    = 'star';
+          s.textContent  = ch;
+          s.style.left   = r.left + r.width/2 + (-26 + Math.random()*52) + 'px';
+          s.style.top    = r.top + (-8 + Math.random()*16) + 'px';
+          s.style.color  = ['#e45b78','#e7b552','#9a82d7'][Math.floor(Math.random()*3)];
+          s.style.animationDelay = Math.random() * 0.14 + 's';
           document.body.appendChild(s);
           s.addEventListener('animationend', () => s.remove());
         });
@@ -972,17 +973,16 @@ ${state.replyText}
           ki++;
           if (ki === seq.length) {
             document.getElementById('eggOverlay').classList.add('show');
-            ki = 0;
-            spawnConfetti(50);
+            ki = 0; spawnConfetti(50);
           }
         } else { ki = 0; }
       });
 
       // ── INIT ──
-      setMood(state.moodZone || 'chill');
-      if (state.shownSong) document.getElementById('songTitle').textContent = state.shownSong;
+      loadTrack(currentTrackIndex);
       renderEkQ();
       updateSticky();
+      requestAnimationFrame(() => playAudio(true));
     </script>
   </body>
 </html>
